@@ -1,43 +1,14 @@
-# Microsoft BASIC for the Ben Eater 6502 project
+# Microsoft BASIC for the [Hydra-16](https://github.com/danstruthers/hydra-16) hardware project:
+
+Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and his wonderful 6502 breadboard YouTube projects [here](https://www.youtube.com/@BenEater/videos).
+
+I forked this over from Ben Eater's for, as mentioned below:
+
+-----------------------------------------------------------------------------------------------------
 
 This code was forked from [mist64/msbasic](https://github.com/mist64/msbasic) and I've added the code from my YouTube videos describing how to port MSBASIC to my 6502 project. The latest commit will match the code from the latest video.
 
-But if you're following along with earlier videos, the "code" link below will take you to the code from that video:
 
-|                                | Video                                                    | Code               |
-|--------------------------------|----------------------------------------------------------|--------------------|
-| ![Video thumbnail][thumbnail1] | [Running MSBASIC on my breadboard 6502 computer][video1] | [a15c8e0][commit1] |
-| ![Video thumbnail][thumbnail2] | [How input buffering works][video2]                      | [54ef9ac][commit2] |
-| ![Video thumbnail][thumbnail2] | [RS232 flow control][video3]                             | [c21542e][commit3] |
-| ![Video thumbnail][thumbnail4] | [Hacking Microsoft BASIC][video4]                        | [f41cac4][commit4] |
-| ![Video thumbnail][thumbnail5] | [Reverse engineering Microsoft BASIC][video5]            | [e00362b][commit5] |
-| ![Video thumbnail][thumbnail6] | [Computer noises][video6]                                | [master][commit6]  |
-
-[thumbnail1]: https://i.ytimg.com/vi/XlbPnihCM0E/mqdefault.jpg
-[video1]: https://youtu.be/XlbPnihCM0E
-[commit1]: https://github.com/beneater/msbasic/tree/a15c8e0fdf620c800913cbb709df4042ab5c8dad
-
-
-[thumbnail2]: https://i.ytimg.com/vi/mpIFag8zSWo/mqdefault.jpg
-[video2]: https://youtu.be/mpIFag8zSWo
-[commit2]: https://github.com/beneater/msbasic/tree/54ef9ac51f4134ac537c7011802a2f81112a242b
-
-
-[thumbnail3]: https://i.ytimg.com/vi/LuKMVXWD7FY/mqdefault.jpg
-[video3]: https://youtu.be/LuKMVXWD7FY
-[commit3]: https://github.com/beneater/msbasic/tree/c21542e724b3da45ba3790405c2cf85e77bc1ad4
-
-[thumbnail4]: https://i.ytimg.com/vi/gOwi2p1pzVM/mqdefault.jpg
-[video4]: https://youtu.be/gOwi2p1pzVM
-[commit4]: https://github.com/beneater/msbasic/tree/f41cac4b064fa7c0bd20c8c33387b2a1c32a8da1
-
-[thumbnail5]: https://i.ytimg.com/vi/aVVKgwr_SfQ/mqdefault.jpg
-[video5]: https://youtu.be/aVVKgwr_SfQ
-[commit5]: https://github.com/beneater/msbasic/tree/e00362b6eda6ec9fdaec134a30b0ab814f26fc3e
-
-[thumbnail6]: https://i.ytimg.com/vi/tIOR7kRevPU/mqdefault.jpg
-[video6]: https://youtu.be/tIOR7kRevPU
-[commit6]: https://github.com/beneater/msbasic/tree/master
 
 Below is the original README:
 
