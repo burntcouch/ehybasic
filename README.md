@@ -13,32 +13,32 @@ Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SEC
 
 The ruduction diet was mostly an exercise to see how well I am getting around with the source; I reduced the error messages, ferinstance, like so:
 
-(in error.s)
+(in error.s)<p>
+...<p>
+"NEXT WITHOUT FOR" --> "NXT WO FOR"<p>
+"RETURN WITHOUT GOSUB" --> "RTN WO JSR"<p>
+"OUT OF DATA"  -->  "OO DAT"<p>
+"ILLG QNT" --> "ILLEGAL QUANTITY"<p>
 ...
-"NEXT WITHOUT FOR" --> "NXT WO FOR"
-"RETURN WITHOUT GOSUB" --> "RTN WO JSR"
-define_error ERR_NODATA, "OUT OF DATA"  -->  "OO DAT"
-define_error ERR_ILLQTY, "ILLG QNT" --> "ILLEGAL QUANTITY"
-...
-and so on.
-
-I've also shortened the banner and easter egg messages drastically.
-
-And lastly, I shortened a lot of the BASIC keywords:
-GOSUB --> JSR
-RETURN --> RTN
-RESTORE --> RSTR
-LEFT$ --> LT$
-RIGHT$ --> RT$
-STR$ --> ST$
-MID$ --> MD$
-PRINT --> ? (just like Applesoft!)
-NOT --> !
-AND --> &
-OR  --> |
-
+and so on.<p>
+<p>
+I've also shortened the banner and easter egg messages drastically.<p>
+<p>
+And lastly, I shortened a lot of the BASIC keywords:<p>
+GOSUB --> JSR<p>
+RETURN --> RTN<p>
+RESTORE --> RSTR<p>
+LEFT$ --> LT$<p>
+RIGHT$ --> RT$<p>
+STR$ --> ST$<p>
+MID$ --> MD$<p>
+PRINT --> ? (just like Applesoft!)<p>
+NOT --> !<p>
+AND --> &<p>
+OR  --> |<p>
+<p>
 Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, 
-and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.
+and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.<p>
 ----------------------------------------------------------------------------------------------------
 
 I forked this over from Ben Eater's fork; see below for Ben's brief comments and the chain of custody....
