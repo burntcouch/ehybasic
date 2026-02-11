@@ -1,8 +1,47 @@
 # Microsoft BASIC for the [Hydra-16](https://github.com/danstruthers/hydra-16) hardware project:
 
 Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and his wonderful 6502 breadboard YouTube projects [here](https://www.youtube.com/@BenEater/videos).
+---------------------------------------------------------------------------------------------------
+# HOWTO:  Installing BASIC on the Hydra-16
 
-I forked this over from Ben Eater's for, as mentioned below:
+As noted below, you will need to have the [CC65 compiler/assembler](https://cc65.github.io/) suite installed on your machine, either Linux or Windows.
+I have include a 'makebas.bat' file to do the build in Windows, and you can use 'make.sh' in Linux.
+
+The Hydra's shared ROM space for expansion occupies $A000-BFFF, and that is where BASIC ends up after the assembly; currently BASIC is slighly under 8K after some ham-fisted hacking I did to reduce the size of error messages and some other eye candy.
+
+Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SECOND 8K ($02000-$04000) bank on your ROM if you want it to show up at $A000 when you plug it in.  If your modifications of the source result in a binary of MORE than 8K, you will have to figure out how to copy the 8K+ section to the FIRST 8K segment manually, so that the two halves will mate up properly...
+
+The ruduction diet was mostly an exercise to see how well I am getting around with the source; I reduced the error messages, ferinstance, like so:
+
+(in error.s)
+...
+"NEXT WITHOUT FOR" --> "NXT WO FOR"
+"RETURN WITHOUT GOSUB" --> "RTN WO JSR"
+define_error ERR_NODATA, "OUT OF DATA"  -->  "OO DAT"
+define_error ERR_ILLQTY, "ILLG QNT" --> "ILLEGAL QUANTITY"
+...
+and so on.
+
+I've also shortened the banner and easter egg messages drastically.
+
+And lastly, I shortened a lot of the BASIC keywords:
+GOSUB --> JSR
+RETURN --> RTN
+RESTORE --> RSTR
+LEFT$ --> LT$
+RIGHT$ --> RT$
+STR$ --> ST$
+MID$ --> MD$
+PRINT --> ? (just like Applesoft!)
+NOT --> !
+AND --> &
+OR  --> |
+
+Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, 
+and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.
+----------------------------------------------------------------------------------------------------
+
+I forked this over from Ben Eater's fork; see below for Ben's brief comments and the chain of custody....
 
 -----------------------------------------------------------------------------------------------------
 
