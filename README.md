@@ -1,6 +1,6 @@
 # Microsoft BASIC for the [Hydra-16](https://github.com/danstruthers/hydra-16) hardware project:
 
-Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and his wonderful 6502 breadboard YouTube projects [here](https://www.youtube.com/@BenEater/videos).
+<h3>Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and his wonderful 6502 breadboard YouTube projects [here](https://www.youtube.com/@BenEater/videos).</h3>
 ---------------------------------------------------------------------------------------------------
 # HOWTO:  Installing BASIC on the Hydra-16
 
