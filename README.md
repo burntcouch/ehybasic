@@ -7,7 +7,7 @@ Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and hi
 As noted below, you will need to have the [CC65 compiler/assembler](https://cc65.github.io/) suite installed on your machine, either Linux or Windows.
 I have include a 'makebas.bat' file to do the build in Windows, and you can use 'make.sh' in Linux.
 
-The Hydra's shared ROM space for expansion occupies $A000-BFFF, and that is where BASIC ends up after the assembly; currently BASIC is slighly under 8K after some ham-fisted hacking I did to reduce the size of error messages and some other eye candy.
+The Hydra's shared ROM space for expansion occupies $A000-DFFF, and that is where BASIC ends up after the assembly; currently BASIC is slighly under 8K after some ham-fisted hacking I did to reduce the size of error messages and some other eye candy.
 
 Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SECOND 8K ($02000-$04000) bank on your ROM if you want it to show up at $A000 when you plug it in.  If your modifications of the source result in a binary of MORE than 8K, you will have to figure out how to copy the 8K+ section to the FIRST 8K segment manually, so that the two halves will mate up properly...
 
@@ -41,8 +41,10 @@ OR  --> |<p>
 and FOR X = 1 TO 3 BY 1 (not 'STEP')<p>
 and IF logic DO something (not 'THEN')<p>
 <p>
-Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, 
-and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.<p>
+Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.<p>
+
+Long term...I am learning from Ben Eater's example and hacking away at the basic infrastructure of BASIC in order to extend it for I/O purposes; the Hydra has a lot of built-in peripheral capability, include I2C / SPI, 6 IO slots, tons of RAM and ROM, and hardware-based task switching.  If anyone is going to build the Hydra hardware they are going to want a easy to use, well documented scripting language at first.  Hopefully some version of BASIC will be both fast (enough) and small enough to be useful as an introduction to the platform.
+  
 ----------------------------------------------------------------------------------------------------
 
 I forked this over from Ben Eater's fork; see below for Ben's brief comments and the chain of custody....
