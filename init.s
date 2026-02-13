@@ -3,9 +3,14 @@
 ; ----------------------------------------------------------------------------
 ;   hacked away from vanilla 'init.s' by PGS
 ;
+
+QT_VERSION:
+    .byte   CR,LF
+    .byte   "v021326-0612"
+    .byte   CR,LF,0
 PR_WRITTEN_BY:
-        lda     #<QT_WRITTEN_BY
-        ldy     #>QT_WRITTEN_BY
+        lda     #<QT_VERSION
+        ldy     #>QT_VERSION
         jsr     STROUT
 COLD_START:
         ldx     #$FF
@@ -232,10 +237,6 @@ L4192:
         sty     GORESTART+2
         jmp     (GORESTART+1)
 
-QT_WRITTEN_BY:
-    .byte   CR,LF
-    .byte   "HACKED 4 HYDRA"
-    .byte   CR,LF,0
 QT_MEMORY_SIZE:
     .byte   "MEM"
     .byte   0

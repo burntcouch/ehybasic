@@ -5,31 +5,31 @@
 .macpack longbranch
 
 .include "defines.s"
-.include "macros.s"
+.include "macros.s"     ; reviewed
 .include "zeropage.s"
 
 .include "header.s"
-.include "token.s"
-.include "error.s"
-.include "message.s"
+.include "token.s"      ; edited by PGS
+.include "error.s"      ; edited by PGS
+.include "message.s"      ; edited by PGS
 .include "memory.s"
-.include "program.s"
-.include "flow1.s"
+.include "program.s"      ; edited by PGS
+.include "flow1.s"      ; edited by PGS
 .include "loadsave.s"
-.include "flow2.s"
-.include "misc1.s"
-.include "print.s"
-.include "input.s"
-.include "eval.s"
-.include "var.s"
-.include "array.s"
-.include "misc2.s"
-.include "string.s"
-.include "misc3.s"
-.include "poke.s"
-.include "float.s"
-.include "chrget.s"
+.include "flow2.s"      ; edited by PGS
+.include "misc1.s"      ; edited by PGS
+.include "print.s"      ; edited by PGS
+.include "input.s"      ; edited by PGS
+.include "eval.s"      ; edited by PGS
+.include "var.s"        ; reviewed
+.include "array.s"      ; reviewed
+.include "misc2.s"      ; edited by PGS
+.include "string.s"      ; edited by PGS
+;.include "misc3.s"     ; removed - KBD specific patches
+.include "poke.s"       ; edited by PGS
+.include "float.s"      ; edited by PGS
+.include "chrget.s"      ; edited by PGS
 .include "rnd.s"
 .include "trig.s"
-.include "init.s"
-.include "extra.s"
+.include "init.s"      ; edited by PGS
+.include "extra.s"      ; edited by PGS
