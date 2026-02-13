@@ -9,16 +9,16 @@ I have include a 'makebas.bat' file to do the build in Windows, and you can use 
 
 The Hydra's shared ROM space for expansion occupies $A000-DFFF, and that is where BASIC ends up after the assembly; currently BASIC is slighly under 8K after some ham-fisted hacking I did to reduce the size of error messages and some other eye candy.
 
-Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SECOND 8K ($02000-$04000) bank on your ROM if you want it to show up at $A000 when you plug it in.  If your modifications of the source result in a binary of MORE than 8K, you will have to figure out how to copy the 8K+ section to the FIRST 8K segment manually, so that the two halves will mate up properly...
+Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SECOND 8K ($02000-$04000) bank on your ROM if you want it to show up at $A000 when you plug it in.  If your modifications of the source result in a binary of MORE than 8K, you will have to figure out how to copy the 8K+ section to the FIRST 8K segment manually, so that the two halves will mate up properly...  (Hardware will be fixed in version 2.x; meanwhile we can cope.)
 
-The ruduction diet was mostly an exercise to see how well I am getting around with the source; I reduced the error messages, ferinstance, like so:
+The reduction diet was mostly an exercise to see how well I am getting around with the source; I reduced the error messages, ferinstance, like so:
 
 (in error.s)<p>
 ...<p>
 "NEXT WITHOUT FOR" --> "NXT WO FOR"<p>
 "RETURN WITHOUT GOSUB" --> "RTN WO JSR"<p>
 "OUT OF DATA"  -->  "OO DAT"<p>
-"ILLG QNT" --> "ILLEGAL QUANTITY"<p>
+"ILLEGAL QUANTITY" --> "ILLG QNT"<p>
 ...
 and so on.<p>
 <p>
