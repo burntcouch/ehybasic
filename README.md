@@ -25,6 +25,7 @@ and so on.<p>
 I've also shortened the banner and easter egg messages drastically.<p>
 <p>
 And lastly, I shortened a lot of the BASIC keywords:<p>
+GOTO --> JMP<p>
 GOSUB --> JSR<p>
 RETURN --> RTN<p>
 RESTORE --> RSTR<p>
@@ -33,9 +34,12 @@ RIGHT$ --> RT$<p>
 STR$ --> ST$<p>
 MID$ --> MD$<p>
 PRINT --> ? (just like Applesoft!)<p>
+  <p>
 NOT --> !<p>
 AND --> &<p>
 OR  --> |<p>
+and FOR X = 1 TO 3 BY 1 (not 'STEP')<p>
+and IF logic DO something (not 'THEN')<p>
 <p>
 Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, 
 and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.<p>
