@@ -24,9 +24,6 @@ define_error ERR_SYNTAX, "SYNTAX"
 define_error ERR_NOGOSUB, "RTN WO JSR"
 define_error ERR_NODATA, "OO DAT"
 define_error ERR_ILLQTY, "ILLG QNT"
-.ifdef CBM1
-	.byte 0,0,0,0,0
-.endif
 define_error ERR_OVERFLOW, "OVFLW"
 define_error ERR_MEMFULL, "OO MEM"
 define_error ERR_UNDEFSTAT, "U'D STMT"
@@ -36,14 +33,8 @@ define_error ERR_ZERODIV, "DIV/0"
 define_error ERR_ILLDIR, "ILLG DIR"
 define_error ERR_BADTYPE, "! TYP"
 define_error ERR_STRLONG, "STR>LNG"
-.ifdef CONFIG_FILE
-  .ifdef CBM1
-define_error ERR_BADDATA, "! DAT"
-  .else
-define_error ERR_BADDATA, "!F DAT"
-  .endif
-.endif
 define_error ERR_FRMCPX, "FRML>CPLX"
 define_error ERR_CANTCONT, "NO CONT"
 define_error ERR_UNDEFFN, "U'D FUNC"
 .endif
+

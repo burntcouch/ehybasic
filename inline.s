@@ -1,3 +1,8 @@
+;
+;  PGS 2/13/26 - removed most conditionals for old machine versions
+;
+;  inline.s
+;
 .segment "CODE"
 
 .ifndef CONFIG_NO_INPUTBUFFER_ZP

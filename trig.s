@@ -1,6 +1,8 @@
+;
+;  PGS 2/13/26 - removed most conditionals for old machine versions
+;
 .segment "CODE"
 
-.ifndef SYM1
 SIN_COS_TAN_ATN:
 ; ----------------------------------------------------------------------------
 ; "COS" FUNCTION
@@ -131,7 +133,6 @@ MICROSOFT:
   .endif
 .endif
 
-.ifndef AIM65
 ; ----------------------------------------------------------------------------
 ; "ATN" FUNCTION
 ; ----------------------------------------------------------------------------
@@ -200,6 +201,4 @@ POLY_ATN:
 
 .if .def(CONFIG_11A) && (!.def(CONFIG_2))
 		.byte	$00 ; XXX
-.endif
-.endif
 .endif

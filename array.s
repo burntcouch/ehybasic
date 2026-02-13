@@ -1,3 +1,9 @@
+;
+;  PGS 2/13/26 - removed most conditionals for old machine versions
+;
+;
+;  array.s
+;
 .segment "CODE"
 
 ; ----------------------------------------------------------------------------

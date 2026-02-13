@@ -2,7 +2,7 @@
 CONFIG_2A := 1
 
 CONFIG_SCRTCH_ORDER := 2
-;CONFIG_NO_LINE_EDITING := 1
+CONFIG_PEEK_SAVE_LINNUM := 1     ; try this out?
 
 ; zero page
 ZP_START0 = $00

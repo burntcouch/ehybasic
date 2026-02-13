@@ -79,7 +79,7 @@ LCDINIT:
 
 
 LCDCMD:
-  jsr GETBYT
+  jsr GETBYT      ; # following 'LCDCMD <val>', <val> ends up in X
   txa
 lcd_instruction:
   jsr lcd_wait
@@ -103,17 +103,17 @@ lcd_instruction:
   rts
 
 LCDPRINT:
-  jsr FRMEVL
-  bit VALTYP
-  bmi lcd_print
-  jsr FOUT
-  jsr STRLIT
+  jsr FRMEVL      ; evaluate the expression following 'LCDPRINT <expr>'
+  bit VALTYP      
+  bmi lcd_print   ; if N bit set, its a string so to ahead
+  jsr FOUT        ; else it's a number?  convert it to a string
+  jsr STRLIT      ; so make it a #?
 lcd_print:
-  jsr FREFAC
-  tax
-  ldy #0
+  jsr FREFAC      ; ??? covert to string, len in X
+  tax             ; count down with X..
+  ldy #0          ; ...count up with Y.
 lcd_print_loop:
-  lda (INDEX),y
+  lda (INDEX),y   ; I guess INDEX points at string?
   jsr lcd_print_char
   iny
   dex

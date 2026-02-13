@@ -1,6 +1,7 @@
+;
+;  PGS 2/13/26 - removed most conditionals for old machine versions
+;
 .segment "CODE"
-
-.ifndef CONFIG_NO_POKE
 ; ----------------------------------------------------------------------------
 ; EVALUATE "EXP1,EXP2"
 ;
@@ -24,12 +25,7 @@ COMBYTE:
 ; ----------------------------------------------------------------------------
 GETADR:
         lda     FACSIGN
-  .ifdef APPLE
-        nop ; PATCH
-        nop
-  .else
         bmi     GOIQ
-  .endif
         lda     FAC
         cmp     #$91
         bcs     GOIQ
@@ -52,24 +48,6 @@ PEEK:
 .endif
         jsr     GETADR
         ldy     #$00
-.ifdef CBM1
-; disallow PEEK between $C000 and $DFFF
-        cmp     #$C0
-        bcc     LD6F3
-        cmp     #$E1
-        bcc     LD6F6
-LD6F3:
-.endif
-.ifdef CBM2
-		nop ; patch that disables the compares above
-		nop
-		nop
-		nop
-		nop
-		nop
-		nop
-		nop
-.endif
         lda     (LINNUM),y
         tay
 .ifdef CONFIG_PEEK_SAVE_LINNUM
@@ -79,13 +57,13 @@ LD6F3:
         sta     LINNUM+1
 .endif
 LD6F6:
-        jmp     SNGFLT
+        jmp     SNGFLT                           ; convert byte to FAC (in misc2.s)
 
 ; ----------------------------------------------------------------------------
 ; "POKE" STATEMENT
 ; ----------------------------------------------------------------------------
 POKE:
-        jsr     GTNUM
+        jsr     GTNUM                            ; puts evaled <expr> in addr pointed to by LINNUM
         txa
         ldy     #$00
         sta     (LINNUM),y
@@ -99,11 +77,7 @@ WAIT:
         stx     FORPNT
         ldx     #$00
         jsr     CHRGOT
-.ifdef CONFIG_EASTER_EGG
-        beq     EASTER_EGG
-.else
         beq     L3628
-.endif
         jsr     COMBYTE
 L3628:
         stx     FORPNT+1
@@ -115,4 +89,4 @@ L362C:
         beq     L362C
 RTS3:
         rts
-.endif
+

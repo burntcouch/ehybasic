@@ -1,3 +1,8 @@
+;
+;  PGS 2/13/26 - removed most conditionals for old machine versions
+;
+; flow2.s
+;
 .segment "CODE"
 ; ----------------------------------------------------------------------------
 ; "RUN" COMMAND
@@ -57,13 +62,8 @@ L2809:
         lda     TXTTAB
         ldx     TXTTAB+1
 L280D:
-.ifdef KBD
-        jsr     LF457
-        bne     UNDERR
-.else
         jsr     FL1
         bcc     UNDERR
-.endif
         lda     LOWTRX
         sbc     #$01
         sta     TXTPTR
