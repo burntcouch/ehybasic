@@ -32,7 +32,7 @@ The main differences in keywords are as follows:
 |  GOTO 100             |  JMP 100          |   |  RSTR                   |   RESTORE        |
 |  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$ |  $MD,ST$,LT$,RT$ |
 |  AND, OR, NOT         |  &,  \|,  \!      |   |                         |                  |
-| ----------------------|:-----------------:|:-:|:-----------------------:|:-----------------|
+|--------------------------------------------------------------------------------------------|
 
 new commands:
 EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
