@@ -14,37 +14,20 @@ The Hydra's shared ROM space for expansion occupies $A000-DFFF, and that is wher
 
 Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SECOND 8K ($02000-$04000) bank on your ROM if you want it to show up at $A000 when you plug it in.  If your modifications of the source result in a binary of MORE than 8K, you will have to figure out how to copy the 8K+ section to the FIRST 8K segment manually, so that the two halves will mate up properly...  (Hardware will be fixed in version 2.x; meanwhile we can cope.)
 
-The reduction diet was mostly an exercise to see how well I am getting around with the source; I reduced the error messages, ferinstance, like so:
-
-(in error.s)<p>
-...<p>
-"NEXT WITHOUT FOR" --> "NXT WO FOR"<p>
-"RETURN WITHOUT GOSUB" --> "RTN WO JSR"<p>
-"OUT OF DATA"  -->  "OO DAT"<p>
-"ILLEGAL QUANTITY" --> "ILLG QNT"<p>
-...
-and so on.<p>
-<p>
-I've also shortened the banner and easter egg messages drastically.<p>
-<p>
-And lastly, I shortened a lot of the BASIC keywords:<p>
-GOTO --> JMP<p>
-GOSUB --> JSR<p>
-RETURN --> RTN<p>
-RESTORE --> RSTR<p>
-LEFT$ --> LT$<p>
-RIGHT$ --> RT$<p>
-STR$ --> ST$<p>
-MID$ --> MD$<p>
-PRINT --> ? (just like Applesoft!)<p>
-  <p>
-NOT --> !<p>
-AND --> &<p>
-OR  --> |<p>
-and FOR X = 10 TO 1 BY -1 (not 'STEP')<p>
-and IF logic DO something (not 'THEN')<p>
-<p>
 Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.<p>
+
+-----------------------------------------
+
+# Usage: differences from 'standard' MS-BASIC
+<code>
+My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).
+
+Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in the original [mist64's](https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and break right out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword (this version uses 'WOZ' instead, but...) in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
+
+
+
+</code>
+# To do: What's next for EhyBASIC
 
 Long term...I am learning from Ben Eater's example and hacking away at the basic infrastructure of BASIC in order to extend it for I/O purposes; the Hydra has a lot of built-in peripheral capability, include I2C / SPI, 6 IO slots, tons of RAM and ROM, and hardware-based task switching.  If anyone is going to build the Hydra hardware they are going to want a easy to use, well documented scripting language at first.  Hopefully some version of BASIC will be both fast (enough) and small enough to be useful as an introduction to the platform.
   
