@@ -31,11 +31,12 @@ In order for these to work fully, you will need to configure your terminal progr
 </ul>
 Currently one can use ANSI commands inline when printing, and something like this could be done:<p>
 <ul>
-  <li>10 RED$ = CH$(27) + "[31m"   : REM TURN ON RED FOREGROUND)</li>
- <li> 20 BOLD$ = CH$(27) + "[1m"    : REM BOLD)</li>
- <li> 30 RESET$ = CHR$(27) + "[0m"   : REM TURN OFF ALL ATTRIBUTES)</li>
- <p>
- And then use constructions like ? RED$ ; "this is read";RESET$;BOLD$;"this is bold"<p>
+  <li>10 RED$ = CH$(27) + "[31m"   :  REM TURN ON RED FOREGROUND</li>
+ <li> 20 BOLD$ = CH$(27) + "[1m"    :  REM BOLD</li>
+ <li> 30 RESET$ = CHR$(27) + "[0m"   :  REM TURN OFF ALL ATTRIBUTES</li>
+</ul>
+  <p>
+ And then use constructions like ? RED$ ; "this is red";BOLD$;"this is red and bold";$RESET;"this is normal"<p>
  ..and etc.<p>
  </ul> 
 <p>
