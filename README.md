@@ -34,12 +34,12 @@ The main differences in keywords are as follows:
 |  AND, OR, NOT         |  &,  \|,  \!      |   |                         |                  |
 |--------------------------------------------------------------------------------------------|
 
-new commands:
+new commands:<p>
 EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
-  keep BASIC programs and variables using '<warm addr>R'.
-WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.
-CLS - clear the screen with ANSI escape codes
-
+  keep BASIC programs and variables using '<warm addr>R'.<p>
+WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.<p>
+CLS - clear the screen with ANSI escape codes<p>
+<p>
 # To do: What's next for EhyBASIC
 
 Long term...I am learning from Ben Eater's example and hacking away at the basic infrastructure of BASIC in order to extend it for I/O purposes; the Hydra has a lot of built-in peripheral capability, include I2C / SPI, 6 IO slots, tons of RAM and ROM, and hardware-based task switching.  If anyone is going to build the Hydra hardware they are going to want a easy to use, well documented scripting language at first.  Hopefully some version of BASIC will be both fast (enough) and small enough to be useful as an introduction to the platform.
