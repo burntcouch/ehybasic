@@ -33,12 +33,13 @@ Currently one can use ANSI commands inline when printing, and something like thi
 <ul>
   <li>10 RED$ = CH$(27) + "[31m"   :  REM TURN ON RED FOREGROUND</li>
  <li> 20 BOLD$ = CH$(27) + "[1m"    :  REM BOLD</li>
- <li> 30 RESET$ = CHR$(27) + "[0m"   :  REM TURN OFF ALL ATTRIBUTES</li>
+ <li> 30 ZERO$ = CHR$(27) + "[0m"   :  REM TURN OFF ALL ATTRIBUTES</li>
 </ul>
   <p>
- And then use constructions like ? RED$ ; "this is red";BOLD$;"this is red and bold";$RESET;"this is normal"<p>
+ And then use constructions like ? RED$ ; "this is red";BOLD$;"this is red and bold";$ZERO;"this is normal"<p>
  ..and etc.<p>
  </ul> 
+GOTCHA:  you will notice I did NOT use RED$ and RESET$ as variables for 'red' and 'turn off attributes above.  THIS IS IMPORTANT - currently EhyBASIC will only distinguish the first TWO characters of a variable name.  This becomes a limiting factor because you also cannot use any names that coincide with keywords.<p>
 <p>
 <h4>Pausing and halting execution; debugging:</h4>
 Applesoft II allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' after crtrl-s and jump out into an embedded version of WozMon to examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
