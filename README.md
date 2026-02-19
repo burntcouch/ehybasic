@@ -20,9 +20,9 @@ Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you b
 
 # Usage: differences from 'standard' MS-BASIC
 My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).<p><p>
-<h6>Line editing:</h6>
+<h4>Line editing:</h4>
 The default MS-BASIC line editing was optional and very limited; this current version now allows sensible use of backspace, and one can also use the '~' character to terminate line entry and start over.  Screen editing will have to wait for another day; since we are still using a serial console, ANSI screen commands may be the best way to implement this going forward.<p>
-<h6>ANSI colors and screen commands:</h6>
+<h4>ANSI colors and screen commands:</h4>
 In order for these to work fully, you will need to configure your terminal program to render them correctly.  In PuTTY you will need to settings section called Window/Colours, and under 'Options for controlling use of colours' you wil want to adjust the settings like so:<p>
 <ul>
   <li> [ON]  Allow terminal to specify ANSI colours (default is ON)</li>
@@ -30,10 +30,10 @@ In order for these to work fully, you will need to configure your terminal progr
   <li> [OFF] Allow terminal to use 24-bit colours (default is ON)</li>
 </ul>
 <p>
-<h6>Pausing and halting execution; debugging:</h6>
+<h4>Pausing and halting execution; debugging:</h4>
 Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and jump out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
 <p>
-<h6>Shortened and changed keywords, and new functions:</h6>
+<h4>Shortened and changed keywords, and new functions:</h4>
   
 |   Old command         |  New command      |   |    Old command            |   New command          |
 | ----------------------|:-----------------:|:-:|:-------------------------:|:-----------------------|
@@ -43,7 +43,7 @@ Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c
 |  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$   |  MD$,ST$,LT$,RT$       |
 |  AND, OR, NOT         |  &,  \|,  \!      |   |  FOR X = 0 TO 10 STEP -1  |  FOR X = 0 TO 10 BY -1 | 
 
-New commands:<p>
+<h4>New commands:</h4>
 EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
   keep BASIC programs and variables using '<warm addr>R'.<p>
 WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.<p>
