@@ -33,6 +33,9 @@ LINNUM:
 TXPSV:
 .endif
 	.res 2
+;
+; setup non-ZP buffer
+;
 .ifndef INPUTBUFFER; allow override
 INPUTBUFFER:
 .endif

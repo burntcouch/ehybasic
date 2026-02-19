@@ -64,12 +64,6 @@ L29B9:
 
 
 CRDO:
-.if .def(CONFIG_PRINTNULLS) && .def(CONFIG_FILE)
-        lda     CURDVC
-        bne     LC9D8
-        sta     POSX
-LC9D8:
-.endif
         lda     #CRLF_1
         sta     POSX
         jsr     OUTDO
@@ -83,11 +77,7 @@ PRINTNULLS:
         pha
         ldx     Z15
         beq     L29D9
-      .ifdef SYM1
-        lda     #$FF
-      .else
         lda     #$00
-      .endif
 L29D3:
         jsr     OUTDO
         dex
@@ -97,10 +87,6 @@ L29D9:
         pla
         tax
   .else
-    .ifndef CONFIG_2
-        lda     #$00
-        sta     POSX
-    .endif
         eor     #$FF
   .endif
 L29DD:
@@ -122,65 +108,27 @@ L29EB:
         adc     #$01
         bne     L2A08
 L29F5:
-.ifdef CONFIG_11A
         php
-.else
-        pha
-.endif
         jsr     GTBYTC
         cmp     #')'
-.ifdef CONFIG_11A
-  .ifdef CONFIG_2
         bne     SYNERR4
-  .else
-        jne     SYNERR
-  .endif
-        plp
         bcc     L2A09
-.else
-  .ifdef CONFIG_11
-        jne     SYNERR
-  .else
-        bne     SYNERR4
-  .endif
-        pla
-        cmp     #TOKEN_TAB
-  .ifdef CONFIG_11
-        bne     L2A09
-  .else
-        bne     L2A0A
-  .endif
-.endif
         txa
         sbc     POSX
         bcc     L2A0D
-.ifndef CONFIG_11
-        beq     L2A0D
-.endif
 L2A08:
         tax
-.ifdef CONFIG_11
 L2A09:
         inx
-.endif
 L2A0A:
-.ifndef CONFIG_11
-        jsr     OUTSP
-.endif
         dex
-.ifndef CONFIG_11
-        bne     L2A0A
-.else
         bne     L2A13
-.endif
 L2A0D:
         jsr     CHRGET
         jmp     PRINT2
-.ifdef CONFIG_11
 L2A13:
         jsr     OUTSP
         bne     L2A0A
-.endif
 
 ; ----------------------------------------------------------------------------
 ; PRINT STRING AT (Y,A)

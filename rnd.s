@@ -59,10 +59,6 @@ GENERIC_RNDSEED:
   .ifdef CONFIG_SMALL
         .byte   $80,$4F,$C7,$52
   .else
-    .ifdef CONFIG_11
-        .byte   $80,$4F,$C7,$52,$58
-    .else
         .byte   $80,$4F,$C7,$52,$59
-    .endif
   .endif
 GENERIC_CHRGET_END:

@@ -13,9 +13,9 @@ QT_IN:
      .byte   " IN "
      .byte  0
 QT_OK:
-		.byte   CR,LF,"OK",CR,LF
+		.byte   $0D,$0A,"OK",$0D,$0A
 		.byte 	0
 QT_BREAK:
-		.byte   CR,LF,"BRK!"
+		.byte   $0D,$0A,"BRK!"
     .byte   0
 
