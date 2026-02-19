@@ -57,13 +57,13 @@ Applesoft II allowed you to interrupt or pause a running program by hitting ctrl
 
 <h4>New commands:</h4>
 <ul>
-<li>EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
+<li>EXIT - exits basic and returns to Hydra BIOS WozMon.  Prints 'warm start' address if you want to 
   keep BASIC programs and variables using 'R'.</li>
-<li>WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.</li>
+<li>WOZ or BRK - stop execution and shell out to 'embedded' WozMon ']' prompt; enter '^' to return to BASIC.</li>
 <li>CLS - clear the screen with ANSI escape codes</li>
 <li>DEBUG - print out stuff on BASIC internals </li>
  </ul>
- <p>DEBUG in particular can be disabled by including CONFIG_DEBUG := 1 in the 'defines_hydra.s' file when building.<p>
+ <p>DEBUG in particular can be disabled by removing CONFIG_DEBUG := 1 in the 'defines_hydra.s' file when building.<p>
 <h4>New functions in the works:</h4>
 <ul><li>INSTR(A$, "|", 1) - start at 1 and return index of character '|' in A$.  Return 0 if no match.  Expand to longer search strings.</li>
 <li>ANSI(<string>) - generate ANSI screen commands such as "31m" (red foreground text ON) as well as cursor commands such as "6A" (move cursor up 6 lines)</li>
