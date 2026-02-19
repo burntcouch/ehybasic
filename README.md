@@ -31,7 +31,7 @@ The main differences in keywords are as follows:
 |  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                    |   DIE            |
 |  GOTO 100             |  JMP 100          |   |  RSTR                   |   RESTORE        |
 |  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$ |  $MD,ST$,LT$,RT$ |
-|  AND, OR, NOT         |  &, |, !          |   |                         |                  |
+|  AND, OR, NOT         |  &, ,\|,\!        |   |                         |                  |
 | ----------------------|:-----------------:|:-:|:-----------------------:|:-----------------|
 
 new commands:
