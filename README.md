@@ -25,13 +25,13 @@ Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c
 <p>
 The main differences in keywords are as follows:
   
-|   Old command         |  New command      |   |    Old command          |   New command    |
-| ----------------------|:-----------------:|:-:|:-----------------------:|:-----------------|
-|  IF x THEN y STEP -1  |  IF x DO y BY -1  |   |  PRINT "fred"           |   ? "fred"       |
-|  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                    |   DIE            |
-|  GOTO 100             |  JMP 100          |   |  RSTR                   |   RESTORE        |
-|  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$ |  MD$,ST$,LT$,RT$ |
-|  AND, OR, NOT         |  &,  \|,  \!      |   |                         |                  |
+|   Old command         |  New command      |   |    Old command            |   New command          |
+| ----------------------|:-----------------:|:-:|:-------------------------:|:-----------------------|
+|  IF x THEN y          |  IF x DO y        |   |  PRINT "fred"             |   ? "fred"             |
+|  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                      |   DIE                  |
+|  GOTO 100             |  JMP 100          |   |  RSTR                     |   RESTORE              |
+|  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$   |  MD$,ST$,LT$,RT$       |
+|  AND, OR, NOT         |  &,  \|,  \!      |   |  FOR X = 0 TO 10 STEP -1  |  FOR X = 0 TO 10 BY -1 | 
 
 
 new commands:<p>
