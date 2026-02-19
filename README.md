@@ -1,4 +1,4 @@
-# Microsoft BASIC for the [Hydra-16](https://github.com/danstruthers/hydra-16) hardware project:
+# EhyBASIC:  MS-BASIC for the [Hydra-16](https://github.com/danstruthers/hydra-16) hardware project:
 
 Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and his wonderful 6502 breadboard YouTube projects [here](https://www.youtube.com/@BenEater/videos). 
 
@@ -14,37 +14,61 @@ The Hydra's shared ROM space for expansion occupies $A000-DFFF, and that is wher
 
 Due to a bug in the 1.8x hardware, you will have to load the 8K image to the SECOND 8K ($02000-$04000) bank on your ROM if you want it to show up at $A000 when you plug it in.  If your modifications of the source result in a binary of MORE than 8K, you will have to figure out how to copy the 8K+ section to the FIRST 8K segment manually, so that the two halves will mate up properly...  (Hardware will be fixed in version 2.x; meanwhile we can cope.)
 
-The reduction diet was mostly an exercise to see how well I am getting around with the source; I reduced the error messages, ferinstance, like so:
-
-(in error.s)<p>
-...<p>
-"NEXT WITHOUT FOR" --> "NXT WO FOR"<p>
-"RETURN WITHOUT GOSUB" --> "RTN WO JSR"<p>
-"OUT OF DATA"  -->  "OO DAT"<p>
-"ILLEGAL QUANTITY" --> "ILLG QNT"<p>
-...
-and so on.<p>
-<p>
-I've also shortened the banner and easter egg messages drastically.<p>
-<p>
-And lastly, I shortened a lot of the BASIC keywords:<p>
-GOTO --> JMP<p>
-GOSUB --> JSR<p>
-RETURN --> RTN<p>
-RESTORE --> RSTR<p>
-LEFT$ --> LT$<p>
-RIGHT$ --> RT$<p>
-STR$ --> ST$<p>
-MID$ --> MD$<p>
-PRINT --> ? (just like Applesoft!)<p>
-  <p>
-NOT --> !<p>
-AND --> &<p>
-OR  --> |<p>
-and FOR X = 10 TO 1 BY -1 (not 'STEP')<p>
-and IF logic DO something (not 'THEN')<p>
-<p>
 Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you burned onto the first 16K of the first chip) by making sure ZP $01 is set to $00, and then in WozMon you run 'A000R' to start.  Off you go from there; no other changes so far.<p>
+
+-----------------------------------------
+
+# Usage: differences from 'standard' MS-BASIC
+My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).<p><p>
+<h4>Line editing:</h4>
+The default MS-BASIC line editing was optional and very limited; this current version now allows sensible use of backspace, and one can also use the '~' character to terminate line entry and start over.  Screen editing will have to wait for another day; since we are still using a serial console, ANSI screen commands may be the best way to implement this going forward.<p>
+<h4>ANSI colors and screen commands:</h4>
+In order for these to work fully, you will need to configure your terminal program to render them correctly.  In PuTTY you will need to settings section called Window/Colours, and under 'Options for controlling use of colours' you wil want to adjust the settings like so:<p>
+<ul>
+  <li> [ON]  Allow terminal to specify ANSI colours (default is ON)</li>
+  <li> [OFF] Allow terminal to use xterm 256-colour mode (default is ON)</li>
+  <li> [OFF] Allow terminal to use 24-bit colours (default is ON)</li>
+</ul>
+Currently one can use ANSI commands inline when printing, and something like this could be done:<p>
+<ul>
+  <li>10 RED$ = CH$(27) + "[31m"   :  REM TURN ON RED FOREGROUND</li>
+ <li> 20 BOLD$ = CH$(27) + "[1m"    :  REM BOLD</li>
+ <li> 30 RESET$ = CHR$(27) + "[0m"   :  REM TURN OFF ALL ATTRIBUTES</li>
+</ul>
+  <p>
+ And then use constructions like ? RED$ ; "this is red";BOLD$;"this is red and bold";$RESET;"this is normal"<p>
+ ..and etc.<p>
+ </ul> 
+<p>
+<h4>Pausing and halting execution; debugging:</h4>
+Applesoft II allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' after crtrl-s and jump out into an embedded version of WozMon to examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
+<p>
+<h4>Shortened and changed keywords, and new functions:</h4>
+  
+|   Old command         |  New command      |   |    Old command            |   New command          |
+| ----------------------|:-----------------:|:-:|:-------------------------:|:-----------------------|
+|  IF x THEN y          |  IF x DO y        |   |  PRINT "fred"             |   ? "fred"             |
+|  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                      |   DIE                  |
+|  GOTO 100             |  JMP 100          |   |  RSTR                     |   RESTORE              |
+|  CLEAR                |  CLR              |   |                           |                        |
+|  CHR$,STR$            |  CH$, ST$         |   |  MID$,LEFT$,RIGHT$        |  MD$, LT$, RT$         |
+|  AND, OR, NOT         |  &,  \|,  \!      |   |  FOR X = 0 TO 10 STEP -1  |  FOR X = 0 TO 10 BY -1 | 
+
+<h4>New commands:</h4>
+<ul>
+<li>EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
+  keep BASIC programs and variables using 'R'.</li>
+<li>WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.</li>
+<li>CLS - clear the screen with ANSI escape codes</li>
+<li>DEBUG - print out stuff on BASIC internals </li>
+ </ul>
+ <p>DEBUG in particular can be disabled by including CONFIG_DEBUG := 1 in the 'defines_hydra.s' file when building.<p>
+<h4>New functions in the works:</h4>
+<ul><li>INSTR(A$, "|", 1) - start at 1 and return index of character '|' in A$.  Return 0 if no match.  Expand to longer search strings.</li>
+<li>ANSI(<string>) - generate ANSI screen commands such as "31m" (red foreground text ON) as well as cursor commands such as "6A" (move cursor up 6 lines)</li>
+</ul>  
+<p>
+# To do: What's next for EhyBASIC
 
 Long term...I am learning from Ben Eater's example and hacking away at the basic infrastructure of BASIC in order to extend it for I/O purposes; the Hydra has a lot of built-in peripheral capability, include I2C / SPI, 6 IO slots, tons of RAM and ROM, and hardware-based task switching.  If anyone is going to build the Hydra hardware they are going to want a easy to use, well documented scripting language at first.  Hopefully some version of BASIC will be both fast (enough) and small enough to be useful as an introduction to the platform.
   

@@ -22,31 +22,13 @@ GERR:
         beq     JERROR
 NEXT3:
         txs
-.ifndef CONFIG_2
-        inx
-        inx
-        inx
-        inx
-.endif
         txa
-.ifdef CONFIG_2
         clc
         adc     #$04
         pha
         adc     #BYTES_FP+1
         sta     DEST
         pla
-.else
-        inx
-        inx
-        inx
-        inx
-        inx
-.ifndef CONFIG_SMALL
-        inx
-.endif
-        stx     DEST
-.endif
         ldy     #>STACK
         jsr     LOAD_FAC_FROM_YA
         tsx

@@ -1,33 +1,42 @@
 <NotepadPlus>
     <Project name="ehyBasic">
         <File name="bios.s" />
-        <File name="chrget.s" />
-        <File name="defines.s" />
         <File name="makebas.bat" />
-        <File name="msbasic.s" />
-        <File name="extra.s" />
-        <File name="iscntc.s" />
-        <File name="cbm_iscntc.s" />
-        <File name="header.s" />
-        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Cd\hydra-16-1.8C\os_rom\bios.s" />
-        <File name="zeropage.s" />
-        <File name="print.s" />
-        <File name="inline.s" />
         <File name="defines_hydra.s" />
         <File name="hydra.cfg" />
-        <File name="hydra_iscntc.s" />
+        <File name="msbasic.s" />
+        <File name="chrget.s" />
+        <File name="defines.s" />
+        <File name="array.s" />
+        <File name="extra.s" />
         <File name="error.s" />
-        <File name="init.s" />
-        <File name="bu\init_pgs.s" />
-        <File name="token.s" />
         <File name="eval.s" />
         <File name="float.s" />
         <File name="flow1.s" />
         <File name="flow2.s" />
+        <File name="header.s" />
+        <File name="init.s" />
         <File name="inline.s" />
         <File name="input.s" />
-        <File name="program.s" />
+        <File name="lcd.s" />
         <File name="macros.s" />
+        <File name="memory.s" />
+        <File name="message.s" />
+        <File name="misc1.s" />
+        <File name="misc2.s" />
+        <File name="misc3.s" />
+        <File name="poke.s" />
+        <File name="print.s" />
+        <File name="program.s" />
+        <File name="rnd.s" />
+        <File name="sound.s" />
+        <File name="string.s" />
+        <File name="token.s" />
+        <File name="trig.s" />
+        <File name="var.s" />
+        <File name="zeropage.s" />
+        <File name="temp\hydrabas.lbl" />
+        <File name="wozmon.s" />
     </Project>
     <Project name="eaterBas">
         <File name="H:\prog\6502\hydra-16\eaterbas\bios.s" />
@@ -42,5 +51,47 @@
         <File name="H:\prog\6502\hydra-16\eaterbas\defines_apple.s" />
         <File name="H:\prog\6502\hydra-16\eaterbas\applesoft.cfg" />
         <File name="H:\prog\6502\hydra-16\eaterbas\inline.s" />
+        <File name="H:\prog\6502\hydra-16\eaterbas\init.s" />
+    </Project>
+    <Project name="IntBas">
+        <File name="H:\prog\6502\hydra-16\intbasic\intbasic.s" />
+        <File name="H:\prog\6502\hydra-16\intbasic.lst" />
+        <File name="H:\prog\6502\hydra-16\intbasic\hydra.cfg" />
+        <File name="H:\prog\6502\hydra-16\intbasic\makebas.bat" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Cd\hydra-16-1.8C\os_rom\bios.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Cd\hydra-16-1.8C\os_rom\defines.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Cd\hydra-16-1.8C\os_rom\zero.s" />
+    </Project>
+    <Project name="cc65new">
+        <File name="H:\prog\6502\hydra-16\c\cc65new\crt0.s" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\hydra_c.cfg" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\interrupt.s" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\main.c" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\makemain.bat" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\rs232_tx.s" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\vectors.s" />
+        <File name="H:\prog\6502\hydra-16\c\cc65new\wait.s" />
+    </Project>
+    <Project name="Hydra_OS">
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\all.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\bios.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\defines.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\disasm.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\makeC02.bat" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\math.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\mmu.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\os_main.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\os_rom.cfg" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\os_rom_C02.cfg" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\shell.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\sound.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\tasks.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\wozmon.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\zero.s" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\OS_ROM_entrypoints_1.8Ce" />
+        <File name="H:\prog\6502\hydra-16\hydra-16-1.8Ce\os_rom\tmp\os_rom_C02.lbl" />
+    </Project>
+    <Project name="bios_extra">
+        <File name="H:\prog\6502\hydra-16\b0rom\temp03.s" />
     </Project>
 </NotepadPlus>
