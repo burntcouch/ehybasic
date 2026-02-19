@@ -19,7 +19,7 @@ Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you b
 -----------------------------------------
 
 # Usage: differences from 'standard' MS-BASIC
-My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).<p><p>
+My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassembler and mini-assembler are in the works).<p><p>
 <h4>Line editing:</h4>
 The default MS-BASIC line editing was optional and very limited; this current version now allows sensible use of backspace, and one can also use the '~' character to terminate line entry and start over.  Screen editing will have to wait for another day; since we are still using a serial console, ANSI screen commands may be the best way to implement this going forward.<p>
 <h4>ANSI colors and screen commands:</h4>
@@ -75,13 +75,11 @@ Long term...I am learning from Ben Eater's example and hacking away at the basic
   
 ----------------------------------------------------------------------------------------------------
 
-I forked this over from Ben Eater's fork; see below for Ben's brief comments and the chain of custody....
+I ported this over from Ben Eater's fork; see below for Ben's brief comments and the chain of custody....
 
 -----------------------------------------------------------------------------------------------------
-
+(per Ben Eater:)<p>
 This code was forked from [mist64/msbasic](https://github.com/mist64/msbasic) and I've added the code from my YouTube videos describing how to port MSBASIC to my 6502 project. The latest commit will match the code from the latest video.
-
-
 
 Below is the original README:
 
