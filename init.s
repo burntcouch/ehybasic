@@ -5,9 +5,9 @@
 ;
 
 QT_VERSION:
-    .byte   CR,LF
-    .byte   "v021326-0612"
-    .byte   CR,LF,0
+    .byte   $0D,$0A
+    .byte   "77-v021626-1153"
+    .byte   0
 PR_WRITTEN_BY:
         lda     #<QT_VERSION
         ldy     #>QT_VERSION
@@ -37,11 +37,13 @@ COLD_START:
         sta     GORESTART
         sta     GOSTROUT
         sta     JMPADRS
+            ;  do we do this for our USR
         sta     USR
         lda     #<IQERR
         ldy     #>IQERR
         sta     USR+1
         sty     USR+2
+            ;  ...ya know?
         lda     #WIDTH
         sta     Z17
         lda     #WIDTH2
@@ -79,28 +81,18 @@ L4098:
         sta     CHRGET-1,x
         dex
         bne     L4098
-.ifdef CONFIG_2
         lda     #$03
         sta     DSCLEN
-.endif
         txa
         sta     SHIFTSIGNEXT
         sta     LASTPT+1
 .if .defined(CONFIG_NULL) || .defined(CONFIG_PRINTNULLS)
         sta     Z15
 .endif
-
-.ifndef CONFIG_11
-        sta     POSX
-.endif
         pha
         sta     Z14
         lda     #$03
         sta     DSCLEN
-.ifndef CONFIG_11
-        lda     #$2C
-        sta     LINNUM+1
-.endif
         jsr     CRDO
         ldx     #TEMPST
         stx     TEMPPT
@@ -117,10 +109,8 @@ L4098:
         bne     L40EE
         lda     #<RAMSTART2
         ldy     #>RAMSTART2
-.ifdef CONFIG_2
         sta     TXTTAB
         sty     TXTTAB+1
-.endif
         sta     LINNUM
         sty     LINNUM+1
         ldy     #$00
@@ -129,24 +119,15 @@ L40D7:
         bne     L40DD
         inc     LINNUM+1
 L40DD:
-.ifdef CONFIG_2
         lda     #$55 ; 01010101 / 10101010
-.else
-        lda     #$92 ; 10010010 / 00100100
-.endif
         sta     (LINNUM),y
         cmp     (LINNUM),y
         bne     L40FA
         asl     a
         sta     (LINNUM),y
         cmp     (LINNUM),y
-.ifndef CONFIG_11
-        beq     L40D7; old: faster
-        bne     L40FA
-.else
         bne     L40FA; new: slower
         beq     L40D7
-.endif
 L40EE:
         jsr     CHRGOT
         jsr     LINGET
@@ -204,13 +185,7 @@ L4192:
         lda     TXTTAB
         ldy     TXTTAB+1
         jsr     REASON
-.ifdef CBM2
-        lda     #<QT_BASIC
-        ldy     #>QT_BASIC
-        jsr     STROUT
-.else
         jsr     CRDO
-.endif
         lda     MEMSIZ
         sec
         sbc     TXTTAB
@@ -238,18 +213,15 @@ L4192:
         jmp     (GORESTART+1)
 
 QT_MEMORY_SIZE:
-    .byte   "MEM"
+    .byte   "M:"
     .byte   0
 QT_TERMINAL_WIDTH:
-    .byte   "WID"
+    .byte   "W:"
     .byte   0
 QT_BYTES_FREE:
     .byte   " FREE"
-    .byte   CR,LF
+    .byte   $0D,$0A
 QT_BASIC:
-    .byte   CR,LF
-    .byte   "1977"
-    .byte   CR,LF
     .byte   0
 
 

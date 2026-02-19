@@ -41,7 +41,10 @@
 		keyword_rts "LCDPRINT", LCDPRINT
     keyword_rts "BEEP", BEEP
 .endif
-
+.ifdef HYDRA
+    keyword_rts "EXIT", BASEXIT
+    keyword_rts "WOZ", WOZGO
+.endif
 		count_tokens
 
 		keyword	"TAB(", TOKEN_TAB
@@ -68,7 +71,7 @@ UNFNC:
 		keyword_addr "SGN", SGN, TOKEN_SGN
 		keyword_addr "INT", INT
 		keyword_addr "ABS", ABS
-		keyword_addr "USR", USR, TOKEN_USR
+		keyword_addr "USR", USR, TOKEN_USR            ; how do these work?
 		keyword_addr "FRE", FRE
 		keyword_addr "POS", POS
 		keyword_addr "SQR", SQR

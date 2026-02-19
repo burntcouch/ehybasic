@@ -1,3 +1,6 @@
+;
+;  sigh!  Some truly genius macro magic here
+;
 ; htasc - set the hi bit on the last byte of a string for termination
 ; (by Tom Greene)
 .macro htasc str
@@ -39,22 +42,22 @@ DUMMY_START:
 ; lay down a keyword and an address (RTS style),
 ; optionally define a token symbol
 .macro keyword_rts key, vec, token
-        .segment "VECTORS"
-		.word	vec-1
-		keyword key, token
+    .segment "VECTORS"
+		  .word	vec-1
+		  keyword key, token
 .endmacro
 
 ; lay down a keyword and an address,
 ; optionally define a token symbol
 .macro keyword_addr key, vec, token
-        .segment "VECTORS"
-		.addr	vec
-		keyword key, token
+    .segment "VECTORS"
+		  .addr	vec
+		  keyword key, token
 .endmacro
 
 .macro count_tokens
-        .segment "DUMMY"
-		NUM_TOKENS := <(*-DUMMY_START)
+    .segment "DUMMY"
+		   NUM_TOKENS := <(*-DUMMY_START)
 .endmacro
 
 .macro init_error_table
@@ -63,9 +66,9 @@ ERROR_MESSAGES:
 .endmacro
 
 .macro define_error error, msg
-        .segment "ERROR"
-		error := <(*-ERROR_MESSAGES)
-		htasc msg
+    .segment "ERROR"
+		   error := <(*-ERROR_MESSAGES)
+		   htasc msg
 .endmacro
 
 ;---------------------------------------------

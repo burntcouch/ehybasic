@@ -79,11 +79,7 @@ L281E:
 POP:
         bne     L281E
         lda     #$FF
-.ifdef CONFIG_2A
         sta     FORPNT+1 ; bugfix, wrong in AppleSoft II
-.else
-        sta     FORPNT
-.endif
         jsr     GTFORPNT
         txs
         cmp     #TOKEN_GOSUB
@@ -151,14 +147,9 @@ L2866:
         beq     L2852
         iny
         cmp     #$22
-.ifndef CONFIG_11
-        beq     L285E; old: swap & cont is faster
-        bne     L2866
-.else
-        bne     L2866; new: cont is faster
+        bne     L2866     ;  bugfix 2A - new: cont is faster
         beq     L285E
-.endif
-
+        
 ; ----------------------------------------------------------------------------
 ; "IF" STATEMENT
 ; ----------------------------------------------------------------------------

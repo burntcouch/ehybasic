@@ -8,14 +8,14 @@
 .include "macros.s"     ; reviewed
 .include "zeropage.s"
 
-.include "header.s"
+.include "header.s"     ; edited by PGS
 .include "token.s"      ; edited by PGS
 .include "error.s"      ; edited by PGS
 .include "message.s"      ; edited by PGS
-.include "memory.s"
+.include "memory.s"       ; reviewed
 .include "program.s"      ; edited by PGS
 .include "flow1.s"      ; edited by PGS
-.include "loadsave.s"
+.include "loadsave.s"             ; not working on for now
 .include "flow2.s"      ; edited by PGS
 .include "misc1.s"      ; edited by PGS
 .include "print.s"      ; edited by PGS
@@ -29,7 +29,7 @@
 .include "poke.s"       ; edited by PGS
 .include "float.s"      ; edited by PGS
 .include "chrget.s"      ; edited by PGS
-.include "rnd.s"
-.include "trig.s"
+.include "rnd.s"        ; edited by PGS
+.include "trig.s"        ; edited by PGS
 .include "init.s"      ; edited by PGS
 .include "extra.s"      ; edited by PGS

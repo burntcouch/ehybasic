@@ -5,14 +5,6 @@
 ;
 .segment "CODE"
 
-.ifndef CONFIG_NO_INPUTBUFFER_ZP
-L2420:
-        dex
-        bpl     INLIN2
-L2423:
-        jsr     CRDO
-.endif
-
 ; ----------------------------------------------------------------------------
 ; READ A LINE, AND STRIP OFF SIGN BITS
 ; ----------------------------------------------------------------------------
@@ -21,36 +13,39 @@ INLIN:
         ldx     #$00
 INLIN2:
         jsr     GETLN
-    .ifndef CONFIG_NO_LINE_EDITING
+      ; eor     #$80      ; do we need this?  
         cmp     #$07
         beq     L2443
-    .endif
         cmp     #$0D
         beq     L2453
-    .ifndef CONFIG_NO_LINE_EDITING
-        cmp     #$20
-        bcc     INLIN2
-        cmp     #$7D
-        bcs     INLIN2
-        cmp     #$40 ; @
-        beq     L2423
-        cmp     #$5F ; _
+        cmp     #$7F
         beq     L2420
+        cmp     #$20  ; screen out anything else below 32 decimal
+        bcc     INLIN2
+        cmp     #$7E ; ~ for cancel line?  (was $40, @)
+        bne     L2443
+        jsr     CRDO
+        jmp     INLIN
+        jmp     L2443
+L2420:
+        dex
+        bpl     INLIN2
+        jsr     CRDO 
+        jmp     INLIN
 L2443:
         cpx     #$47
         bcs     L244C
-     .endif
         sta     INPUTBUFFER,x
+        sta     CLIPBOARD+1,x
         inx
         bne     INLIN2
 L244C:
-    .ifndef CONFIG_NO_LINE_EDITING
         lda     #$07 ; BEL
 L244E:
         jsr     OUTDO
         bne     INLIN2
-    .endif
 L2453:
+        stx     CLIPBOARD           ; save last input line
         jmp     L29B9
 GETLN:
         jsr     MONRDKEY

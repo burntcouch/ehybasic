@@ -121,9 +121,7 @@ PUTEMP:
         ldy     #$00
         stx     FAC_LAST-1
         sty     FAC_LAST
-.ifdef CONFIG_2
         sty     FACEXTENSION
-.endif
         dey
         sty     VALTYP
         stx     LASTPT
@@ -193,9 +191,7 @@ FINDHIGHESTSTRING:
         sta     FRETOP+1
         ldy     #$00
         sty     FNCNAM+1
-.ifdef CONFIG_2
         sty     FNCNAM	; GC bugfix!
-.endif
         lda     STREND
         ldx     STREND+1
         sta     LOWTR
@@ -267,9 +263,7 @@ L3376:
 .endif
         iny
         lda     (INDEX),y
-.ifdef CONFIG_11
         ldy     #$00	; GC bugfix
-.endif
         asl     a
         adc     #$05
         adc     INDEX
@@ -353,19 +347,11 @@ L33FA:
 ; TO TOP AND GO BACK FOR ANOTHER
 ; ----------------------------------------------------------------------------
 MOVE_HIGHEST_STRING_TO_TOP:
-.ifdef CONFIG_2
         lda     FNCNAM+1	; GC bugfix
         ora     FNCNAM
-.else
-        ldx     FNCNAM+1
-.endif
         beq     L33FA
         lda     Z52
-.ifndef CONFIG_10A
-        sbc     #$03
-.else
         and     #$04
-.endif
         lsr     a
         tay
         sta     Z52
@@ -609,9 +595,7 @@ MIDSTR:
         jsr     GETBYT
 L353F:
         jsr     SUBSTRING_SETUP
-.ifdef CONFIG_2
         beq     GOIQ
-.endif
         dex
         txa
         pha
@@ -633,15 +617,9 @@ L353F:
 SUBSTRING_SETUP:
         jsr     CHKCLS
         pla
-.ifndef CONFIG_11
-        sta     JMPADRS+1
-        pla
-        sta     JMPADRS+2
-.else
         tay
         pla
         sta     Z52
-.endif
         pla
         pla
         pla
@@ -650,23 +628,13 @@ SUBSTRING_SETUP:
         sta     DSCPTR
         pla
         sta     DSCPTR+1
-.ifdef CONFIG_11
         lda     Z52
         pha
         tya
         pha
-.endif
         ldy     #$00
         txa
-.ifndef CONFIG_2
-        beq     GOIQ
-.endif
-.ifndef CONFIG_11
-        inc     JMPADRS+1
-        jmp     (JMPADRS+1)
-.else
         rts
-.endif
 
 ; ----------------------------------------------------------------------------
 ; "LEN" FUNCTION

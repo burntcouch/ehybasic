@@ -16,6 +16,36 @@ INPUT_BUFFER:
     .res 256
 ;
 .segment "BIOS"
+BASEXIT:
+        lda #>RESTART
+        jsr WRITE_BYTE
+        lda #<RESTART
+        jsr WRITE_BYTE
+        lda #$0D
+        jsr MONCOUT
+        lda #$0A
+        jsr MONCOUT
+        jmp WOZMON
+USRGO:
+        lda FAC
+        sta USRD+8
+        lda FAC+1
+        sta USRD+9
+        lda FAC+2
+        sta USRD+10
+        lda FAC+3
+        sta USRD+11
+        jsr USR
+        lda USRD
+        sta RESULT
+        lda USRD+1
+        sta RESULT+1
+        lda USRD+2
+        sta RESULT+2
+        lda USRD+3
+        sta RESULT+3
+        jmp COPY_RESULT_INTO_FAC
+        rts
 LOAD:
                 rts
 SAVE:
@@ -26,3 +56,10 @@ LCDINIT:
 LCDCMD:
 LCDPRINT:
           rts
+          
+;
+;  include WOZMON
+;
+.include "wozmon_hy.s"
+;
+;

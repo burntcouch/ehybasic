@@ -34,38 +34,6 @@ FSUBT:
         jmp     FADDT
 
 ; ----------------------------------------------------------------------------
-; Commodore BASIC V2 Easter Egg
-; ----------------------------------------------------------------------------
-.ifdef CONFIG_EASTER_EGG
-EASTER_EGG:
-        lda     LINNUM
-        cmp     #<6502
-        bne     L3628
-        lda     LINNUM+1
-        sbc     #>6502
-        bne     L3628
-        sta     LINNUM
-        tay
-        lda     #$80
-        sta     LINNUM+1
-LD758:
-        ldx     #$0A
-LD75A:
-        lda     MICROSOFT-1,x
-        and     #$3F
-        sta     (LINNUM),y
-        iny
-        bne     LD766
-        inc     LINNUM+1
-LD766:
-        dex
-        bne     LD75A
-        dec     FORPNT
-        bne     LD758
-        rts
-.endif
-
-; ----------------------------------------------------------------------------
 ; SHIFT SMALLER ARGUMENT MORE THAN 7 BITS
 ; ----------------------------------------------------------------------------
 FADD1:
@@ -91,11 +59,7 @@ L365B:
         lda     ARG
 FADD2:
         tay
-.ifdef KBD
-        beq     RTS4
-.else
         beq     RTS3
-.endif
         sec
         sbc     FAC
         beq     FADD3
@@ -174,13 +138,7 @@ L36C7:
 .endif
         sty     FACEXTENSION
         adc     #$08
-.ifdef CONFIG_2B
-; bugfix?
-; fix does not exist on AppleSoft 2
         cmp     #(MANTISSA_BYTES+1)*8
-.else
-        cmp     #MANTISSA_BYTES*8
-.endif
         bne     L36C7
 
 ; ----------------------------------------------------------------------------
@@ -242,7 +200,6 @@ NORMALIZE_FAC5:
 NORMALIZE_FAC6:
         inc     FAC
         beq     OVERFLOW
-.ifndef CONFIG_ROR_WORKAROUND
         ror     FAC+1
         ror     FAC+2
         ror     FAC+3
@@ -250,43 +207,6 @@ NORMALIZE_FAC6:
         ror     FAC+4
   .endif
         ror     FACEXTENSION
-.else
-        lda     #$00
-        bcc     L372E
-        lda     #$80
-L372E:
-        lsr     FAC+1
-        ora     FAC+1
-        sta     FAC+1
-        lda     #$00
-        bcc     L373A
-        lda     #$80
-L373A:
-        lsr     FAC+2
-        ora     FAC+2
-        sta     FAC+2
-        lda     #$00
-        bcc     L3746
-        lda     #$80
-L3746:
-        lsr     FAC+3
-        ora     FAC+3
-        sta     FAC+3
-        lda     #$00
-        bcc     L3752
-        lda     #$80
-L3752:
-        lsr     FAC+4
-        ora     FAC+4
-        sta     FAC+4
-        lda     #$00
-        bcc     L375E
-        lda     #$80
-L375E:
-        lsr     FACEXTENSION
-        ora     FACEXTENSION
-        sta     FACEXTENSION
-.endif
 L3764:
         rts
 
@@ -379,7 +299,7 @@ SHIFT_RIGHT:
         tay
         lda     FACEXTENSION
         bcs     SHIFT_RIGHT5
-.ifndef CONFIG_ROR_WORKAROUND
+
 LB588:
         asl     1,x
         bcc     LB58E
@@ -400,48 +320,6 @@ SHIFT_RIGHT4:
         ror     a
         iny
         bne     LB588
-.else
-L37C4:
-        pha
-        lda     1,x
-        and     #$80
-        lsr     1,x
-        ora     1,x
-        sta     1,x
-        .byte   $24
-SHIFT_RIGHT4:
-        pha
-        lda     #$00
-        bcc     L37D7
-        lda     #$80
-L37D7:
-        lsr     2,x
-        ora     2,x
-        sta     2,x
-        lda     #$00
-        bcc     L37E3
-        lda     #$80
-L37E3:
-        lsr     3,x
-        ora     3,x
-        sta     3,x
-        lda     #$00
-        bcc     L37EF
-        lda     #$80
-L37EF:
-        lsr     4,x
-        ora     4,x
-        sta     4,x
-        pla
-        php
-        lsr     a
-        plp
-        bcc     L37FD
-        ora     #$80
-L37FD:
-        iny
-        bne     L37C4
-.endif
 SHIFT_RIGHT5:
         clc
         rts
@@ -451,26 +329,26 @@ SHIFT_RIGHT5:
 CON_ONE:
         .byte   $81,$00,$00,$00
 POLY_LOG:
-		.byte	$02
-		.byte   $80,$19,$56,$62
-		.byte   $80,$76,$22,$F3
-		.byte   $82,$38,$AA,$40
+		    .byte	$02
+		    .byte   $80,$19,$56,$62
+		    .byte   $80,$76,$22,$F3
+		    .byte   $82,$38,$AA,$40
 CON_SQR_HALF:
-		.byte   $80,$35,$04,$F3
+	    	.byte   $80,$35,$04,$F3
 CON_SQR_TWO:
-		.byte   $81,$35,$04,$F3
+	    	.byte   $81,$35,$04,$F3
 CON_NEG_HALF:
-		.byte   $80,$80,$00,$00
+		    .byte   $80,$80,$00,$00
 CON_LOG_TWO:
-		.byte   $80,$31,$72,$18
+		    .byte   $80,$31,$72,$18
 .else
 CON_ONE:
         .byte   $81,$00,$00,$00,$00
 POLY_LOG:
         .byte   $03
-		.byte   $7F,$5E,$56,$CB,$79
-		.byte   $80,$13,$9B,$0B,$64
-		.byte   $80,$76,$38,$93,$16
+		    .byte   $7F,$5E,$56,$CB,$79
+		    .byte   $80,$13,$9B,$0B,$64
+		    .byte   $80,$76,$38,$93,$16
         .byte   $82,$38,$AA,$3B,$20
 CON_SQR_HALF:
         .byte   $80,$35,$04,$F3,$34
@@ -527,11 +405,7 @@ FMULT:
 ; FAC = ARG * FAC
 ; ----------------------------------------------------------------------------
 FMULTT:
-.ifndef CONFIG_11
-        beq     L3903
-.else
         jeq     L3903
-.endif
         jsr     ADD_EXPONENTS
         lda     #$00
         sta     RESULT
