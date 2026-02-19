@@ -29,6 +29,15 @@ In order for these to work fully, you will need to configure your terminal progr
   <li> [OFF] Allow terminal to use xterm 256-colour mode (default is ON)</li>
   <li> [OFF] Allow terminal to use 24-bit colours (default is ON)</li>
 </ul>
+Currently one can use ANSI commands inline when printing, and something like this could be done:<p>
+<ul>
+  <li>10 RED$ = CH$(27) + "[31m"   : REM TURN ON RED FOREGROUND)</li>
+ <li> 20 BOLD$ = CH$(27) + "[1m"    : REM BOLD)</li>
+ <li> 30 RESET$ = CHR$(27) + "[0m"   : REM TURN OFF ALL ATTRIBUTES)</li>
+ <p>
+ And then use constructions like ? RED$ ; "this is read";RESET$;BOLD$;"this is bold"<p>
+ ..and etc.<p>
+ </ul> 
 <p>
 <h4>Pausing and halting execution; debugging:</h4>
 Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and jump out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
@@ -40,16 +49,22 @@ Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c
 |  IF x THEN y          |  IF x DO y        |   |  PRINT "fred"             |   ? "fred"             |
 |  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                      |   DIE                  |
 |  GOTO 100             |  JMP 100          |   |  RSTR                     |   RESTORE              |
-|  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$   |  MD$,ST$,LT$,RT$       |
+|  CLEAR                |  CLR              |   |                           |                        |
+|  CHR$,STR$            |  CH$, ST$         |   |  MID$,LEFT$,RIGHT$        |  MD$, LT$, RT$         |
 |  AND, OR, NOT         |  &,  \|,  \!      |   |  FOR X = 0 TO 10 STEP -1  |  FOR X = 0 TO 10 BY -1 | 
 
 <h4>New commands:</h4>
-EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
-  keep BASIC programs and variables using '<warm addr>R'.<p>
-WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.<p>
-CLS - clear the screen with ANSI escape codes<p>
+<ul>
+<li>EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
+  keep BASIC programs and variables using 'R'.</li>
+<li>WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.</li>
+<li>CLS - clear the screen with ANSI escape codes</li>
+ </ul>
+<h4>New functions in the works:</h4>
+<ul><li>INSTR(A$, "|", 1) - start at 1 and return index of character '|' in A$.  Return 0 if no match.  Expand to longer search strings.</li>
+<li>ANSI(<string>) - generate ANSI screen commands such as "31m" (red foreground text ON) as well as cursor commands such as "6A" (move cursor up 6 lines)</li>
+</ul>  
 <p>
-  
 # To do: What's next for EhyBASIC
 
 Long term...I am learning from Ben Eater's example and hacking away at the basic infrastructure of BASIC in order to extend it for I/O purposes; the Hydra has a lot of built-in peripheral capability, include I2C / SPI, 6 IO slots, tons of RAM and ROM, and hardware-based task switching.  If anyone is going to build the Hydra hardware they are going to want a easy to use, well documented scripting language at first.  Hopefully some version of BASIC will be both fast (enough) and small enough to be useful as an introduction to the platform.
