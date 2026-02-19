@@ -30,9 +30,9 @@ The main differences in keywords are as follows:
 |  IF x THEN y STEP -1  |  IF x DO y BY -1  |   |  PRINT "fred"           |   ? "fred"       |
 |  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                    |   DIE            |
 |  GOTO 100             |  JMP 100          |   |  RSTR                   |   RESTORE        |
-|  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$ |  $MD,ST$,LT$,RT$ |
+|  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$ |  MD$,ST$,LT$,RT$ |
 |  AND, OR, NOT         |  &,  \|,  \!      |   |                         |                  |
-|--------------------------------------------------------------------------------------------|
+
 
 new commands:<p>
 EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
