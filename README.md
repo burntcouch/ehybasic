@@ -21,7 +21,7 @@ Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you b
 # Usage: differences from 'standard' MS-BASIC
 My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).
 <p>
-Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in the original [mist64's](https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and break right out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword (this version uses 'WOZ' instead, but...) in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
+Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and jump out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
 <p>
 The main differences in keywords are as follows:
   
