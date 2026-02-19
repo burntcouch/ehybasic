@@ -41,7 +41,7 @@ Currently one can use ANSI commands inline when printing, and something like thi
  </ul> 
 <p>
 <h4>Pausing and halting execution; debugging:</h4>
-Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and jump out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
+Applesoft II allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in mist64's (https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' after crtrl-s and jump out into an embedded version of WozMon to examine the running environment in place.  I've also added a BRK keyword in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
 <p>
 <h4>Shortened and changed keywords, and new functions:</h4>
   
@@ -60,7 +60,9 @@ Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c
   keep BASIC programs and variables using 'R'.</li>
 <li>WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.</li>
 <li>CLS - clear the screen with ANSI escape codes</li>
+<li>DEBUG - print out stuff on BASIC internals </li>
  </ul>
+ <p>DEBUG in particular can be disabled by including CONFIG_DEBUG := 1 in the 'defines_hydra.s' file when building.<p>
 <h4>New functions in the works:</h4>
 <ul><li>INSTR(A$, "|", 1) - start at 1 and return index of character '|' in A$.  Return 0 if no match.  Expand to longer search strings.</li>
 <li>ANSI(<string>) - generate ANSI screen commands such as "31m" (red foreground text ON) as well as cursor commands such as "6A" (move cursor up 6 lines)</li>
