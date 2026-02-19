@@ -19,14 +19,27 @@ Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you b
 -----------------------------------------
 
 # Usage: differences from 'standard' MS-BASIC
-<code>
 My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).
-
+<p>
 Apple II's allowed you to interrupt or pause a running program by hitting ctrl-c / ctrl-s; the first was included in the original [mist64's](https://github.com/mist64/msbasic) port and I've added the second.  There is also an 'examine' mode; you can hit 'x' when in pause and break right out into an embedded version of WozMon and examine the running environment in place.  I've also added a BRK keyword (this version uses 'WOZ' instead, but...) in order to pause execution automatically and fall into WozMon.  You can hit '^' to return to BASIC from this version of the monitor.
+<p>
+The main differences in keywords are as follows:
+  
+|   Old command         |  New command      |   |    Old command          |   New command    |
+| ----------------------|:-----------------:|:-:|:-----------------------:|:-----------------|
+|  IF x THEN y STEP -1  |  IF x DO y BY -1  |   |  PRINT "fred"           |   ? "fred"       |
+|  GOSUB 50 : RETURN    |  JSR 50 : RTN     |   |  END                    |   DIE            |
+|  GOTO 100             |  JMP 100          |   |  RSTR                   |   RESTORE        |
+|  CLEAR                |  CLR              |   |  MID$,STR$,LEFT$,RIGHT$ |  $MD,ST$,LT$,RT$ |
+|  AND, OR, NOT         |  &, |, !          |   |                         |                  |
+| ----------------------|:-----------------:|:-:|:-----------------------:|:-----------------|
 
+new commands:
+EXIT - exits basic and returns to BIOS WozMon.  Prints 'warm start' address if you want to 
+  keep BASIC programs and variables using '<warm addr>R'.
+WOZ or BRK - stop execution and shell out to WozMon ']' prompt; enter '^' to return to BASIC.
+CLS - clear the screen with ANSI escape codes
 
-
-</code>
 # To do: What's next for EhyBASIC
 
 Long term...I am learning from Ben Eater's example and hacking away at the basic infrastructure of BASIC in order to extend it for I/O purposes; the Hydra has a lot of built-in peripheral capability, include I2C / SPI, 6 IO slots, tons of RAM and ROM, and hardware-based task switching.  If anyone is going to build the Hydra hardware they are going to want a easy to use, well documented scripting language at first.  Hopefully some version of BASIC will be both fast (enough) and small enough to be useful as an introduction to the platform.
