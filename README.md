@@ -23,8 +23,8 @@ Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you b
 NEW functionality 2/26/26:<p>
 
 A lot of changes in the last week:<p>
-CLS <x>: (rather than just CLS) clear screen + ANSI 'm' command to change an attribute.<p>
-ATT <X>: ANSI 'm' attributes; bold, italic, underline, fgd and bkg colors<p>
+CLS x: (rather than just CLS) clear screen + ANSI 'm' command to change an attribute.<p>
+ATT x: ANSI 'm' attributes; bold, italic, underline, fgd and bkg colors<p>
 INS(str + char):  finds 'char' in 'str', returns index or 0 if none<p>
 <p>
 Also, there is now a dedicated register dump that ends up at $D2D5 (or use jsr DUMPREG) if using it to debug code.<p>
@@ -80,8 +80,7 @@ Applesoft II allowed you to interrupt or pause a running program by hitting ctrl
  </ul>
  <p>DEBUG in particular can be disabled by including CONFIG_DEBUG := 1 in the 'defines_hydra.s' file when building.<p>
 <h4>New functions in the works:</h4>
-<ul><li>INSTR(A$, "|", 1) - start at 1 and return index of character '|' in A$.  Return 0 if no match.  Expand to longer search strings.</li>
-<li>ANSI(<string>) - generate ANSI screen commands such as "31m" (red foreground text ON) as well as cursor commands such as "6A" (move cursor up 6 lines)</li>
+<ul><li>ATT num - generate ANSI screen commands such as "31m" (red foreground text ON) as well as cursor commands such as "6A" (move cursor up 6 lines)</li>
 </ul>  
 <p>
 # To do: What's next for EhyBASIC
