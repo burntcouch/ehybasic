@@ -19,6 +19,20 @@ Once you have the ROM in place, make sure you are 'switched' to Bank 0 (if you b
 -----------------------------------------
 
 # Usage: differences from 'standard' MS-BASIC
+
+NEW functionality:
+A lot of changes in the last week:<p>
+CLS <x>: (rather than just CLS) clear screen + ANSI 'm' command to change an attribute.<p>
+ATT <X>: ANSI 'm' attributes; bold, italic, underline, fgd and bkg colors<p>
+INS(<str> + <char>):  finds <char> in <str>, returns index or 0 if none<p>
+<p>
+Also, there is now a dedicated register dump that ends up at $D2D5 (or use jsr DUMPREG) if using it to debug code.<p>
+Output looks like this:<p>
+SP/PC/ST/A/X/Y -> 05/C0B1/10000011/FF/01/03<p>
+...with bits on status register in MSB->LSB order<p>
+<p><p>This function destroys no registers and uses no ZP or RAM resources.
+<p>
+
 My very first programming language, when velociraptors stalked the dark, Bigfoot-ridden woods of Eastern Oregon, was Applesoft BASIC, so some of my modifications attempt to recapture that experience.  But I also want this particular port to be useful as a utility language for the Hydra, so I have already added some basic debugging tools (disassbler and mini-assembler are in the works).<p><p>
 <h4>Line editing:</h4>
 The default MS-BASIC line editing was optional and very limited; this current version now allows sensible use of backspace, and one can also use the '~' character to terminate line entry and start over.  Screen editing will have to wait for another day; since we are still using a serial console, ANSI screen commands may be the best way to implement this going forward.<p>
