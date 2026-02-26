@@ -24,7 +24,7 @@ NEW functionality:
 A lot of changes in the last week:<p>
 CLS <x>: (rather than just CLS) clear screen + ANSI 'm' command to change an attribute.<p>
 ATT <X>: ANSI 'm' attributes; bold, italic, underline, fgd and bkg colors<p>
-INS(<str> + <char>):  finds <char> in <str>, returns index or 0 if none<p>
+INS(str + char):  finds 'char' in 'str', returns index or 0 if none<p>
 <p>
 Also, there is now a dedicated register dump that ends up at $D2D5 (or use jsr DUMPREG) if using it to debug code.<p>
 Output looks like this:<p>
