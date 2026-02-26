@@ -12,19 +12,23 @@ ZP_WM_ST      = $2B
 ZP_XAM        = $24                   ; Last "opened" location
 ZP_Y_SAVE     = $22
 ;
-.segment "BIOS"
+.segment "DEBUG"
 
 DISASM:                                          ; FOR NOW
                rts
 MON_START:
 WOZGO:
                 cld                     ; Clear decimal arithmetic mode.
+                php
+                pha
+                phx
+                phy
                 cli                     ; Enable interrupts
                 stz     ZP_WM_DASTATE
                 bra     is_start
 
 not_cr:
-                cmp     #$7F
+                cmp     #BACKSPC
                 beq     is_backspace
                 cmp     #$1B
                 beq     IS_ESCAPE
@@ -202,4 +206,8 @@ mod_8_check:
                 and     #7              ; For MOD 8 = 0
                 bpl     print_next     ; Always taken.
 WOZEXIT:
+                ply
+                plx
+                pla
+                plp
                 rts

@@ -45,6 +45,7 @@
     keyword_rts "EXIT", BASEXIT        ; defined in bios.s
     keyword_rts "BRK", WOZGO            ; defined in wozmon_hy.s
     keyword_rts "CLS", CLEARSCR         ; defined in bios.s
+    keyword_rts "ATT", SETATTR
     .ifdef DEBUG
     keyword_rts "DEBUG", GODEBUG          ; defined in bios.s
     .endif
@@ -95,6 +96,10 @@ UNFNC_TAN:
 UNFNC_ATN:
 		keyword_addr "ATN", ATN
 		keyword_addr "PEEK", PEEK
+.ifdef HYDRA
+    keyword_addr "INS", INST1
+    ;    keyword_addr "XV", EX_VAR
+.endif
 		keyword_addr "LEN", LEN
 		keyword_addr "ST$", STR
 		keyword_addr "VAL", VAL

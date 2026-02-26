@@ -37,6 +37,7 @@
         <File name="zeropage.s" />
         <File name="temp\hydrabas.lbl" />
         <File name="wozmon.s" />
+        <File name="wozmon_hy.s" />
     </Project>
     <Project name="eaterBas">
         <File name="H:\prog\6502\hydra-16\eaterbas\bios.s" />
@@ -93,5 +94,26 @@
     </Project>
     <Project name="bios_extra">
         <File name="H:\prog\6502\hydra-16\b0rom\temp03.s" />
+    </Project>
+    <Project name="tests">
+        <File name="H:\prog\6502\hydra-16\catests\macros.s" />
+        <File name="H:\prog\6502\hydra-16\catests\makeit.bat" />
+        <File name="H:\prog\6502\hydra-16\catests\test.cfg" />
+        <File name="H:\prog\6502\hydra-16\catests\burn\macros.txt" />
+    </Project>
+    <Project name="TinyBASIC">
+        <File name="H:\prog\6502\TinyBASIC\basic.il" />
+        <File name="H:\prog\6502\TinyBASIC\config.inc" />
+        <File name="H:\prog\6502\TinyBASIC\ctmon65.inc" />
+        <File name="H:\prog\6502\TinyBASIC\IL.inc" />
+        <File name="H:\prog\6502\TinyBASIC\make.bat" />
+        <File name="H:\prog\6502\TinyBASIC\mytb.asm" />
+        <File name="H:\prog\6502\TinyBASIC\mytb.hex" />
+        <File name="H:\prog\6502\TinyBASIC\mytb.lst" />
+        <File name="H:\prog\6502\TinyBASIC\README.md" />
+        <File name="H:\prog\6502\TinyBASIC\storage.asm" />
+        <File name="H:\prog\6502\TinyBASIC\support.asm" />
+        <File name="H:\prog\6502\TinyBASIC\Tiny_BASIC.docx" />
+        <File name="H:\prog\6502\TinyBASIC\xkim.inc" />
     </Project>
 </NotepadPlus>

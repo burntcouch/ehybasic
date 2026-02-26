@@ -429,14 +429,8 @@ FRM_VARIABLE_CALL	= *-1
         sty     FAC_LAST
         ldx     VALTYP
         beq     L2DB1
-.ifdef CONFIG_2
-  .ifndef CBM2
-; bugfix?
-; fixed on AppleSoft II, not on any CBM
         ldx     #$00
         stx     STRNG1+1
-  .endif
-.endif
         rts
 L2DB1:
 .ifndef CONFIG_SMALL

@@ -20,6 +20,7 @@ USRD := $0400
 USR := $0410
 
 DEBUG := 1
+DUMPFLG := 1
 
 CLIPBOARD := $0500
 
@@ -34,7 +35,8 @@ MONCOUT := $F803       ; will point to WRITE_CHAR in hydra bios
 MONRDKEY := $F800      ; READ_CHAR
 WRITE_BYTE := $F8A3    ;  self exp
 WOZMON := $FE00        ; Hydra OSROM WozMon entry
-CLEAR_SCR := $F928     ; ANSI escape clear screen
+
+BACKSPC := $08         ; PuTTy will send $7F (DEL) also...
 
 ; Hydra Entry points
 ; misc

@@ -15,7 +15,7 @@
 .include "memory.s"       ; reviewed
 .include "program.s"      ; edited by PGS
 .include "flow1.s"      ; edited by PGS
-.include "loadsave.s"             ; not working on for now
+.include "loadsave.s"    ; not working on for now (see bios.s below)
 .include "flow2.s"      ; edited by PGS
 .include "misc1.s"      ; edited by PGS
 .include "print.s"      ; edited by PGS
@@ -32,4 +32,5 @@
 .include "rnd.s"        ; edited by PGS
 .include "trig.s"        ; edited by PGS
 .include "init.s"      ; edited by PGS
-.include "extra.s"      ; edited by PGS
+.include "bios.s"       ; added functions - PGS
+.include "debug.s"      ; debug and WozMon - PGS

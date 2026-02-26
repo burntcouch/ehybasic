@@ -1,6 +1,36 @@
 .setcpu "65C02"
 .debuginfo
 
+;
+;  macros for debugging stuff
+;
+.macro debug_varstr varble
+.ident(.concat(.string(varble), "TXT")):
+        .byte $0D, $0A
+        .byte .concat(.string(varble), " : $")
+        .byte 0
+.endmacro
+
+.macro OUTDEBUGLN varble, len
+    .local Loop
+        lda #<.ident(.concat(.string(varble), "TXT")) 
+        ldy #>.ident(.concat(.string(varble), "TXT")) 
+        jsr STROUT
+        ldy #0
+        ldx #len
+   .if len > 0
+Loop:    
+        iny
+        lda varble, y
+        jsr WRITE_BYTE
+        dex 
+        bne Loop
+   .endif   
+.endmacro
+
+;
+;  some necc zero page stuff
+;
 .zeropage
 .org ZP_START0
     .res 15
@@ -9,7 +39,9 @@ ZP_READ_PTR:
 ZP_WRITE_PTR:
     .res 1
 ZP_SER_SEND_STATUS:
-    .res 1   
+    .res 1
+ZP_SCRATCH:
+    .res 2    
 ;
 .segment "INPUT_BUFFER"
 INPUT_BUFFER:   
@@ -35,7 +67,7 @@ USRGO:
         sta USRD+10
         lda FAC+3
         sta USRD+11
-        jsr USR                    ; do the thing at $0410
+        jsr USR                    ; do a thing at $0410?
         lda USRD
         sta RESULT
         lda USRD+1
@@ -46,45 +78,66 @@ USRGO:
         sta RESULT+3
         jmp COPY_RESULT_INTO_FAC
         rts
+ ;
+ ;  ANSI screen stuff
+ ;
 CLEARSCR:
-        ;jsr CLEAR_SCR
-        WRITE_SEQ #$1B, #$5B, #$32, #$4A, #$1B, #$5B, #$30,
-        WRITE_SEQ #$3B, #$30, #$66, #$0D, #$0A
-        rts
- 
-.ifdef DEBUG
-   CLIPTXT:        .byte $0D, $0A
-                   .byte "CLIPBOARD: "
-                   .byte 0
-   
-   START_VARS:     .byte $0D, $0A
-                   .byte "Start of variables: "
-                   .byte 0
-      
-GODEBUG:   ; print a bunch of stuff about BASIC internals
-        lda #<CLIPTXT
-        ldy #>CLIPTXT
-        jsr STROUT
-        ldx CLIPBOARD
-        ldy #0
-CLIPNEXT:
-        iny
-        lda CLIPBOARD,y
+        jsr GETBYT      ; # following 'CLS <val>', <val> ends up in X
+        phx
+        WRITE_SEQ #$1B, #$5B, #$32, #$4A, #$1B, #$5B, #$30   ; clear screen, set coords to 0,0
+        WRITE_SEQ #$3B, #$30, #$66 
+        jmp SCJMP
+SETATTR:
+        jsr GETBYT      ; # following 'ATT <val>', <val> ends up in X
+        phx
+SCJMP:
+        WRITE_SEQ #$1B, #$5B   ; write 'ESC[<val>m'
+        plx
+        txa
+        ldy #$FF
+SC95:   iny
+        sec
+        sbc #10
+        bcs SC95
+        clc
+        adc #$3A
+        tax
+        tya
+        clc
+        adc #$30
         jsr MONCOUT
-        dex
-        beq  CLIPNEXT
-        lda #<START_VARS
-        ldy #>START_VARS
-        jsr STROUT
-        
-        
-        lda #$0D
+        txa
         jsr MONCOUT
-        lda #$0A
+        lda #$6D        
         jsr MONCOUT
-        rts
-.endif
+SCEND:  rts   
 
+INST1:
+         ; experimental functions
+        jsr     GETSTR   ; returns length in y, string at INDEX
+        dey
+        lda     TEMP1
+        pha
+        lda     (INDEX),y         ; get last char
+        sta     TEMP1
+        tya
+        tax    
+        ldy     #0
+I1LOOP: 
+        lda     (INDEX),y
+        cmp     TEMP1
+        beq     I1END
+        iny
+        dex
+        bne     I1LOOP
+        ldy     #$FF
+I1END:  pla
+        sta     TEMP1
+        iny
+        jmp     SNGFLT
+;
+;
+;
 LOAD:
                 rts
 SAVE:
@@ -96,9 +149,4 @@ LCDCMD:
 LCDPRINT:
           rts
           
-;
-;  include WOZMON
-;
-.include "wozmon_hy.s"
-;
 ;

@@ -167,37 +167,42 @@ OUTQUES:
 OUTDO:
         bit     Z14
         bmi     L2A56
-.if .def(CONFIG_PRINT_CR) || .def(CBM1)
-        pha
-.endif
+;.if .def(CONFIG_PRINT_CR) || .def(CBM1)
+;        pha
+;.endif
         cmp     #$20
         bcc     L2A4E
 LCA6A:
-.ifdef CONFIG_PRINT_CR
-        lda     POSX
-        cmp     Z17
-        bne     L2A4C
-        jsr     CRDO
-L2A4C:
-.endif
+;.ifdef CONFIG_PRINT_CR
+;        lda     POSX
+;        cmp     Z17
+;        bne     L2A4C
+;        jsr     CRDO
+;L2A4C:
+;.endif
+
         inc     POSX
 L2A4E:
-.if .def(CONFIG_PRINT_CR) || .def(CBM1)
-        pla
-.endif
-.ifdef CONFIG_MONCOUT_DESTROYS_Y
-        sty     DIMFLG
-.endif
-.ifdef CONFIG_IO_MSB
-        ora     #$80
-.endif
+
+;.if .def(CONFIG_PRINT_CR) || .def(CBM1)
+;        pla
+;.endif
+;.ifdef CONFIG_MONCOUT_DESTROYS_Y
+;        sty     DIMFLG
+;.endif
+;.ifdef CONFIG_IO_MSB
+;        ora     #$80
+;.endif
+
         jsr     MONCOUT
-.ifdef CONFIG_IO_MSB
-        and     #$7F
-.endif
-.ifdef CONFIG_MONCOUT_DESTROYS_Y
-        ldy     DIMFLG
-.endif
+        
+;.ifdef CONFIG_IO_MSB
+;        and     #$7F
+;.endif
+;.ifdef CONFIG_MONCOUT_DESTROYS_Y
+;        ldy     DIMFLG
+;.endif
+
 L2A56:
         and     #$FF
 LE8F2:

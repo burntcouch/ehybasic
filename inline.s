@@ -18,7 +18,7 @@ INLIN2:
         beq     L2443
         cmp     #$0D
         beq     L2453
-        cmp     #$7F
+        cmp     #BACKSPC
         beq     L2420
         cmp     #$20  ; screen out anything else below 32 decimal
         bcc     INLIN2

@@ -6,7 +6,7 @@
 
 QT_VERSION:
     .byte   $0D,$0A
-    .byte   "77-v021626-1153"
+    .byte   "EhyBASIC-MS78-v022026-1008"
     .byte   0
 PR_WRITTEN_BY:
         lda     #<QT_VERSION
@@ -213,10 +213,10 @@ L4192:
         jmp     (GORESTART+1)
 
 QT_MEMORY_SIZE:
-    .byte   "M:"
+    .byte   "MEMORY:"
     .byte   0
 QT_TERMINAL_WIDTH:
-    .byte   "W:"
+    .byte   "WIDTH:"
     .byte   0
 QT_BYTES_FREE:
     .byte   " FREE"
