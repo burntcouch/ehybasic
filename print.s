@@ -48,21 +48,9 @@ L29B1:
 
 
 L29B9:
-  .ifdef CBM2                         ; left here in case
-        lda     #$00                  ; we want to implement
-        sta     INPUTBUFFER,x         ; larger buffer
-        ldx     #<(INPUTBUFFER-1)
-        ldy     #>(INPUTBUFFER-1)
-  .else
-    .ifndef APPLE
         ldy     #$00
         sty     INPUTBUFFER,x
         ldx     #LINNUM+1
-    .endif
-  .endif
-
-
-
 CRDO:
         lda     #CRLF_1
         sta     POSX

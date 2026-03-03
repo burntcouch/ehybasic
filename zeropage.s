@@ -122,11 +122,7 @@ FNCNAM:
 TEMP3:
 	.res 2
 DSCPTR:
-.ifdef CONFIG_SMALL
-		.res 2
-.else
-		.res 3
-.endif
+	.res 3
 DSCLEN:
 	.res 2
 .ifndef JMPADRS ; allow override
@@ -183,20 +179,7 @@ SGNCPR = STRNG1
 FACEXTENSION = STRNG1+1
 STRNG2:
 	.res 2
-.ifdef AIM65
-ATN:
-	.res 3
-ZBE:
-	.res 1
-.endif
-.ifdef SYM1
-USR1:
-	.res 3
-USR2:
-	.res 3
-USR3:
-	.res 3
-.endif
+
 CHRGET:
 TXTPTR = <(GENERIC_TXTPTR-GENERIC_CHRGET + CHRGET)
 CHRGOT = <(GENERIC_CHRGOT-GENERIC_CHRGET + CHRGET)

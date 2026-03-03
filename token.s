@@ -48,6 +48,8 @@
     keyword_rts "ATT", SETATTR
     .ifdef DEBUG
     keyword_rts "DEBUG", GODEBUG          ; defined in bios.s
+    keyword_rts "TWOI", TWOI         ; defined in bios.s
+    keyword_rts "STNI", STNI
     .endif
 .endif
 		count_tokens
@@ -70,9 +72,8 @@
 		keyword	"=", TOKEN_EQUAL
 		keyword	"<"
 
-        .segment "VECTORS"
+.segment "VECTORS"
 UNFNC:
-
 		keyword_addr "SGN", SGN, TOKEN_SGN
 		keyword_addr "INT", INT
 		keyword_addr "ABS", ABS
@@ -97,24 +98,25 @@ UNFNC_ATN:
 		keyword_addr "ATN", ATN
 		keyword_addr "PEEK", PEEK
 .ifdef HYDRA
-    keyword_addr "INS", INST1
-    ;    keyword_addr "XV", EX_VAR
-.endif
+    keyword_addr "INSTR", INST1
+    keyword_addr "ANSI$", ANSSTR                   ; return ANSI attrib
+.endif    
 		keyword_addr "LEN", LEN
-		keyword_addr "ST$", STR
+		keyword_addr "STR$", STR
 		keyword_addr "VAL", VAL
 		keyword_addr "ASC", ASC
-		keyword_addr "CH$", CHRSTR
-		keyword_addr "LT$", LEFTSTR, TOKEN_LEFTSTR
-		keyword_addr "RT$", RIGHTSTR
-		keyword_addr "MD$", MIDSTR
+		keyword_addr "CHR$", CHRSTR
+		keyword_addr "LEFT$", LEFTSTR, TOKEN_LEFTSTR
+		keyword_addr "RIGHT$", RIGHTSTR
+		keyword_addr "MID$", MIDSTR
 .ifdef CONFIG_2
 		keyword	"GO", TOKEN_GO
 .endif
-        .segment "KEYWORDS"
+
+.segment "KEYWORDS"
 		.byte   0
 
-        .segment "VECTORS"
+.segment "VECTORS"
 MATHTBL:
         .byte   $79
         .word   FADDT-1

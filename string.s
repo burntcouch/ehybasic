@@ -525,17 +525,17 @@ L34E2:
 ; "CHR$" FUNCTION
 ; ----------------------------------------------------------------------------
 CHRSTR:
-        jsr     CONINT
+        jsr     CONINT                   ; returns integer arg in x
         txa
         pha
         lda     #$01
-        jsr     STRSPA
+        jsr     STRSPA                  ; allocates 1 char string space
+        pla                             ; ends up with len in FAC
+        ldy     #$00                    ; address in FAC+1, FAC+2
+        sta     (FAC+1),y               ; store the byte
         pla
-        ldy     #$00
-        sta     (FAC+1),y
         pla
-        pla
-        jmp     PUTNEW
+        jmp     PUTNEW                  ; put the string out
 
 ; ----------------------------------------------------------------------------
 ; "LEFT$" FUNCTION

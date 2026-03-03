@@ -6,7 +6,7 @@
 
 QT_VERSION:
     .byte   $0D,$0A
-    .byte   "EhyBASIC-MS78-v022026-1008"
+    .byte   "EhyBASIC-MS78-v022626-1621"
     .byte   0
 PR_WRITTEN_BY:
         lda     #<QT_VERSION
@@ -206,6 +206,12 @@ L4192:
 .if CONFIG_SCRTCH_ORDER = 3
          jsr     SCRTCH
 .endif
+        lda      #1
+        sta     CLIPPTR
+        dey
+        sta     CLIPBOARD             ; zero out clipboard
+        sta     CLIPBOARD+1
+        ;
         lda     #<RESTART
         ldy     #>RESTART
         sta     GORESTART+1

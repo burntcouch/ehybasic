@@ -320,17 +320,6 @@ L2D36:
 L2D39:
         jsr     ISLETC
         bcs     FRM_VARIABLE
-.ifdef CONFIG_CBM_ALL
-        cmp     #$FF
-        bne     LCDC1
-        lda     #<CON_PI                            ; is this a hardcoded Pi constant?
-        ldy     #>CON_PI
-        jsr     LOAD_FAC_FROM_YA
-        jmp     CHRGET
-CON_PI:
-        .byte   $82,$49,$0f,$DA,$A1
-LCDC1:
-.endif
         cmp     #$2E
         beq     L2D36
         cmp     #TOKEN_MINUS

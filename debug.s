@@ -71,7 +71,7 @@ debug_varstr DEST
 debug_varstr VARPNT
 
                    
-GODEBUG:   ; print a bunch of stuff about BASIC internals       
+GODEBUG:   ; print a bunch of stuff about BASIC internals   
         OUTDEBUGLN LINNUM, 2
         OUTDEBUGLN TXTPTR, 2
         OUTDEBUGLN MEMSIZ, 2
@@ -90,6 +90,9 @@ GODEBUG:   ; print a bunch of stuff about BASIC internals
         OUTDEBUGLN INDEX, 2
         OUTDEBUGLN DEST, 2
         OUTDEBUGLN VARPNT, 2
+  .ifdef DUMPFLG
+        jsr DUMPREG
+  .endif
         rts  
 ;     
 ;
@@ -113,7 +116,7 @@ TSTNXT2:  inc a
           rts
 
 DUMPTXT1:
-        .byte "SP/PC/ST/A/X/Y -> "
+        .byte "SP/PC/nv-bdizc/A/X/Y -> "
         .byte 0
 
 DUMPREG:       ; dump registers safely and print
@@ -163,7 +166,7 @@ DUMPCON:
 DUMPLP2:
         rol
         pha
-        bcc   DUMPSKx
+        bcc   DUMPSKx            ; NV-BDIZC
         lda   #$31
         bra   DUMPSKy
 DUMPSKx: 
@@ -195,6 +198,14 @@ DUMPSKy:
 DREGLP1: 
         jsr   MONRDKEY              ; wait for a key
         bcc   DREGLP1
+        cmp   #'s'                  ; print out stack?
+        bne   DREGSK3
+        jsr   DUMPSTACK
+DREGSK3:
+        cmp   #'z'                  ; print out zp?
+        bne  DREGSK4
+        jsr  DUMPZP
+DREGSK4:        
         cmp   #'x'
         bne   DREGNXT
         jsr   WOZGO                ; go to Wozmon if necc
@@ -204,6 +215,51 @@ DREGNXT:
         pla
         plp
         rts    
+
+DUMPSTACK:
+        php
+        pha
+        ldy #0
+        sty TEMP1
+        lda #1
+        sta TEMP1+1
+        bra DSTKLP1
+DUMPZP:
+        php
+        pha
+        ldy #0
+        sty TEMP1
+        sty TEMP1+1   
+DSTKLP1:
+        tya
+        jsr WRITE_BYTE
+        lda #':'
+        jsr MONCOUT
+DSTKLP2:
+        lda (TEMP1), y
+        jsr WRITE_BYTE
+        lda #$20
+        jsr MONCOUT
+        iny
+        tya
+        and #$0F       ; 00001111  
+        beq  DSTKSKL   
+        bra  DSTKLP2
+DSTKSKL:
+        lda #$0D
+        jsr MONCOUT
+        lda #$0A
+        jsr MONCOUT
+        tya
+        bne DSTKLP1        
+DUMPSTKEND:
+        lda #$0D
+        jsr MONCOUT
+        lda #$0A
+        jsr MONCOUT
+        pla
+        plp
+        rts
         
 .endif                ; DEBUG
 .endif               ; HYDRA
@@ -213,3 +269,5 @@ DREGNXT:
 ;  include WOZMON
 ;
 .include "wozmon_hy.s"
+;
+;

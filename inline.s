@@ -16,6 +16,10 @@ INLIN2:
       ; eor     #$80      ; do we need this?  
         cmp     #$07
         beq     L2443
+        cmp     #$60          ; '`' paste from clipboard
+        beq     CLIPPASTE
+        cmp     #$03          ; ctrl-c copy to clipboard
+        beq     CLIPCOPY        
         cmp     #$0D
         beq     L2453
         cmp     #BACKSPC
@@ -36,7 +40,6 @@ L2443:
         cpx     #$47
         bcs     L244C
         sta     INPUTBUFFER,x
-        sta     CLIPBOARD+1,x
         inx
         bne     INLIN2
 L244C:
@@ -45,7 +48,6 @@ L244E:
         jsr     OUTDO
         bne     INLIN2
 L2453:
-        stx     CLIPBOARD           ; save last input line
         jmp     L29B9
 GETLN:
         jsr     MONRDKEY
@@ -58,4 +60,48 @@ GETLN:
         pla
 L2465:
         rts
+;
+;   new additions.  PGS 3/1/26
+;  
+;  CLIP AND PASTE WITH CLIPBOARD
+;
+CLIPCOPY:
+        phy
+        stx     CLIPBOARD
+        txa
+        beq     CLIPEX             ; nothing to copy?
+        ldy     #1
+        sty     CLIPPTR
+        dey
+CLIPCPYLP:
+        lda     INPUTBUFFER,y
+        sta     CLIPBOARD+1,y
+        iny
+        cpy     CLIPBOARD
+        bne     CLIPCPYLP
+        ;sty     CLIPPTR          ; for when want to store multiple items
+        beq     CLIPEX        ; always true?
+;        
+CLIPPASTE:
+        phy
+        lda     CLIPPTR
+        tay
+LPCONT: 
+        lda     CLIPBOARD       
+        beq     CLIPEX
+        dey
+LPCLIP:
+        lda     CLIPBOARD+1,y
+        sta     INPUTBUFFER,x
+        jsr     OUTDO
+        iny
+        inx
+        cpx     #$47
+        beq     L2453
+        cpy     CLIPBOARD
+        bne     LPCLIP
+CLIPEX:
+        ply
+        jmp     INLIN2
+        
 
