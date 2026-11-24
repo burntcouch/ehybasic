@@ -24,19 +24,12 @@ ERROR:
         jsr     OUTQUES
 L2329:
         lda     ERROR_MESSAGES,x
-.ifndef CONFIG_SMALL_ERROR
         pha
         and     #$7F
-.endif
         jsr     OUTDO
-.ifdef CONFIG_SMALL_ERROR
-        lda     ERROR_MESSAGES+1,x
-        jsr     OUTDO
-.else
         inx
         pla
         bpl     L2329
-.endif
         jsr     STKINI
         lda     #<QT_ERROR
         ldy     #>QT_ERROR
@@ -67,12 +60,7 @@ L2351:
         stx     TXTPTR
         sty     TXTPTR+1
         jsr     CHRGET
-.ifdef CONFIG_11
-; bug in pre-1.1: CHRGET sets Z on '\0'
-; and ':' - a line starting with ':' in
-; direct mode gets ignored
         tax
-.endif
         beq     L2351
         ldx     #$FF
         stx     CURLIN+1
@@ -132,20 +120,11 @@ L23AD:
         bne     L23AD
 ; ----------------------------------------------------------------------------
 PUT_NEW_LINE:
-.ifdef CONFIG_2
         jsr     SETPTRS
         jsr     LE33D
         lda     INPUTBUFFER
         beq     L2351
         clc
-.else
-        lda     INPUTBUFFER
-        beq     FIX_LINKS
-        lda     MEMSIZ
-        ldy     MEMSIZ+1
-        sta     FRETOP
-        sty     FRETOP+1
-.endif
         lda     VARTAB
         sta     HIGHTR
         adc     EOLPNTR
@@ -157,12 +136,6 @@ PUT_NEW_LINE:
 L23D6:
         sty     HIGHDS+1
         jsr     BLTU
-.ifdef CONFIG_INPUTBUFFER_0200
-        lda     LINNUM
-        ldy     LINNUM+1
-        sta     INPUTBUFFER-2
-        sty     INPUTBUFFER-1
-.endif
         lda     STREND
         ldy     STREND+1
         sta     VARTAB
@@ -182,11 +155,9 @@ L23E6:
 ; ----------------------------------------------------------------------------
 FIX_LINKS:
         jsr     SETPTRS
-.ifdef CONFIG_2
         jsr     LE33D
         jmp     L2351
 LE33D:
-.endif
         lda     TXTTAB
         ldy     TXTTAB+1
         sta     INDEX
@@ -195,11 +166,7 @@ LE33D:
 L23FA:
         ldy     #$01
         lda     (INDEX),y
-.ifdef CONFIG_2
         beq     RET3
-.else
-        jeq     L2351
-.endif
         ldy     #$04
 L2405:
         iny
@@ -221,13 +188,10 @@ L2405:
 
 ; ----------------------------------------------------------------------------
 
-.ifdef CONFIG_2
-; !!! kbd_loadsave.s requires an RTS here!
 RET3:
 		rts
-.endif
 
-.include "inline.s"
+.include "inline.s"      ; how a line is actually obtained via hardware
 
 ; ----------------------------------------------------------------------------
 ; TOKENIZE THE INPUT LINE
@@ -271,10 +235,6 @@ L2497:
         inx
 L2498:
         lda     INPUTBUFFERX,x
-.ifndef CONFIG_2
-        cmp     #$20
-        beq     L2497
-.endif
         sec
         sbc     TOKEN_NAME_TABLE,y
         beq     L2496
@@ -398,9 +358,7 @@ SCRTCH:
         iny
         sta     (TXTTAB),y
         lda     TXTTAB
-.ifdef CONFIG_2
-		clc
-.endif
+		    clc
         adc     #$02
         sta     VARTAB
         lda     TXTTAB+1
@@ -409,23 +367,15 @@ SCRTCH:
 ; ----------------------------------------------------------------------------
 SETPTRS:
         jsr     STXTPT
-.ifdef CONFIG_11A
         lda     #$00
-
 ; ----------------------------------------------------------------------------
 ; "CLEAR" STATEMENT
 ; ----------------------------------------------------------------------------
 CLEAR:
         bne     L256A
-.endif
 CLEARC:
-.ifdef KBD
-        lda     #<CONST_MEMSIZ
-        ldy     #>CONST_MEMSIZ
-.else
         lda     MEMSIZ
         ldy     MEMSIZ+1
-.endif
         sta     FRETOP
         sty     FRETOP+1
         lda     VARTAB
@@ -440,22 +390,13 @@ STKINI:
         ldx     #TEMPST
         stx     TEMPPT
         pla
-.ifdef CONFIG_2
-		tay
-.else
-        sta     STACK+STACK_TOP+1
-.endif
+	    	tay
         pla
-.ifndef CONFIG_2
-        sta     STACK+STACK_TOP+2
-.endif
         ldx     #STACK_TOP
         txs
-.ifdef CONFIG_2
         pha
         tya
         pha
-.endif
         lda     #$00
         sta     OLDTEXT+1
         sta     SUBFLG
@@ -506,9 +447,6 @@ L2598:
 L25A6:
 L25A6X:
         ldy     #$01
-.ifdef CONFIG_DATAFLG
-        sty     DATAFLG
-.endif
         lda     (LOWTRX),y
         beq     L25E5
         jsr     ISCNTC
@@ -534,18 +472,8 @@ L25CA:
         and     #$7F
 L25CE:
         jsr     OUTDO
-.ifdef CONFIG_DATAFLG
-        cmp     #$22
-        bne     LA519
-        lda     DATAFLG
-        eor     #$FF
-        sta     DATAFLG
-LA519:
-.endif
         iny
-.ifdef CONFIG_11
         beq     L25E5
-.endif
         lda     (LOWTRX),y
         bne     L25E8
         tay
@@ -560,12 +488,6 @@ L25E5:
         jmp     RESTART
 L25E8:
         bpl     L25CE
-.ifdef CONFIG_DATAFLG
-        cmp     #$FF
-        beq     L25CE
-        bit     DATAFLG
-        bmi     L25CE
-.endif
         sec
         sbc     #$7F
         tax

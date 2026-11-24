@@ -25,11 +25,7 @@ L2FAF:
 
 ; ----------------------------------------------------------------------------
 NEG32768:
-        .byte   $90,$80,$00,$00
-
-.ifdef CONFIG_2C
-		.byte	$00; bugfix: short number
-.endif
+        .byte   $90,$80,$00,$00,$00   ; incorporating v2C bugfix
 
 ; ----------------------------------------------------------------------------
 ; EVALUATE NUMERIC FORMULA AT TXTPTR

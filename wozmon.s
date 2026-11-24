@@ -1,5 +1,13 @@
-.setcpu "65C02"
-.segment "WOZMON"
+;
+;   modified to run out of EhyBASIC
+;
+ACIA_DATA         = $FF10
+ACIA_STATUS       = $FF11
+ACIA_CMD          = $FF12
+ACIA_CTRL         = $FF13
+
+INIT_BUFFER         = $F923
+
 
 XAML            = $24                   ; Last "opened" location Low
 XAMH            = $25                   ; Last "opened" location High
@@ -12,7 +20,7 @@ MODE            = $2B                   ; $00=XAM, $7F=STOR, $AE=BLOCK XAM
 
 IN              = $0200                 ; Input buffer
 
-RESET:
+WOZGO:
                 CLD                     ; Clear decimal arithmetic mode.
                 JSR     INIT_BUFFER
                 CLI
@@ -22,7 +30,7 @@ RESET:
                 STY     ACIA_CMD
 
 NOTCR:
-                CMP     #$08            ; Backspace key?
+                CMP     #$7F            ; Backspace key?
                 BEQ     BACKSPACE       ; Yes.
                 CMP     #$1B            ; ESC?
                 BEQ     ESCAPE          ; Yes.
@@ -44,7 +52,7 @@ BACKSPACE:      DEY                     ; Back up text index.
                 BMI     GETLINE         ; Beyond start of line, reinitialize.
 
 NEXTCHAR:
-                JSR     CHRIN
+                JSR     MONRDKEY
                 BCC     NEXTCHAR
                 STA     IN,Y            ; Add to text buffer.
                 CMP     #$0D            ; CR?
@@ -72,7 +80,10 @@ NEXTITEM:
                 BEQ     SETSTOR         ; Yes, set STOR mode.
                 CMP     #$52            ; "R"?
                 BEQ     RUNPROG         ; Yes, run user program.
-                STX     L               ; $00 -> L.
+                CMP     #$58            ; "X"?
+                BNE     zeCONT
+                JMP     WOZEND
+zeCONT:         STX     L               ; $00 -> L.
                 STX     H               ;    and H.
                 STY     YSAV            ; Save Y for comparison
 
@@ -184,6 +195,6 @@ ECHO:
 TXDELAY:        DEC                     ; Decrement A.
                 BNE     TXDELAY         ; Until A gets to 0.
                 PLA                     ; Restore A.
-                RTS                     ; Return.
+WOZEND:         RTS                     ; Return.
 
 

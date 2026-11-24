@@ -48,28 +48,10 @@ L29B1:
 
 
 L29B9:
-  .ifdef CBM2                         ; left here in case
-        lda     #$00                  ; we want to implement
-        sta     INPUTBUFFER,x         ; larger buffer
-        ldx     #<(INPUTBUFFER-1)
-        ldy     #>(INPUTBUFFER-1)
-  .else
-    .ifndef APPLE
         ldy     #$00
         sty     INPUTBUFFER,x
         ldx     #LINNUM+1
-    .endif
-  .endif
-
-
-
 CRDO:
-.if .def(CONFIG_PRINTNULLS) && .def(CONFIG_FILE)
-        lda     CURDVC
-        bne     LC9D8
-        sta     POSX
-LC9D8:
-.endif
         lda     #CRLF_1
         sta     POSX
         jsr     OUTDO
@@ -83,11 +65,7 @@ PRINTNULLS:
         pha
         ldx     Z15
         beq     L29D9
-      .ifdef SYM1
-        lda     #$FF
-      .else
         lda     #$00
-      .endif
 L29D3:
         jsr     OUTDO
         dex
@@ -97,10 +75,6 @@ L29D9:
         pla
         tax
   .else
-    .ifndef CONFIG_2
-        lda     #$00
-        sta     POSX
-    .endif
         eor     #$FF
   .endif
 L29DD:
@@ -122,65 +96,27 @@ L29EB:
         adc     #$01
         bne     L2A08
 L29F5:
-.ifdef CONFIG_11A
         php
-.else
-        pha
-.endif
         jsr     GTBYTC
         cmp     #')'
-.ifdef CONFIG_11A
-  .ifdef CONFIG_2
         bne     SYNERR4
-  .else
-        jne     SYNERR
-  .endif
-        plp
         bcc     L2A09
-.else
-  .ifdef CONFIG_11
-        jne     SYNERR
-  .else
-        bne     SYNERR4
-  .endif
-        pla
-        cmp     #TOKEN_TAB
-  .ifdef CONFIG_11
-        bne     L2A09
-  .else
-        bne     L2A0A
-  .endif
-.endif
         txa
         sbc     POSX
         bcc     L2A0D
-.ifndef CONFIG_11
-        beq     L2A0D
-.endif
 L2A08:
         tax
-.ifdef CONFIG_11
 L2A09:
         inx
-.endif
 L2A0A:
-.ifndef CONFIG_11
-        jsr     OUTSP
-.endif
         dex
-.ifndef CONFIG_11
-        bne     L2A0A
-.else
         bne     L2A13
-.endif
 L2A0D:
         jsr     CHRGET
         jmp     PRINT2
-.ifdef CONFIG_11
 L2A13:
         jsr     OUTSP
         bne     L2A0A
-.endif
 
 ; ----------------------------------------------------------------------------
 ; PRINT STRING AT (Y,A)
@@ -219,37 +155,42 @@ OUTQUES:
 OUTDO:
         bit     Z14
         bmi     L2A56
-.if .def(CONFIG_PRINT_CR) || .def(CBM1)
-        pha
-.endif
+;.if .def(CONFIG_PRINT_CR) || .def(CBM1)
+;        pha
+;.endif
         cmp     #$20
         bcc     L2A4E
 LCA6A:
-.ifdef CONFIG_PRINT_CR
-        lda     POSX
-        cmp     Z17
-        bne     L2A4C
-        jsr     CRDO
-L2A4C:
-.endif
+;.ifdef CONFIG_PRINT_CR
+;        lda     POSX
+;        cmp     Z17
+;        bne     L2A4C
+;        jsr     CRDO
+;L2A4C:
+;.endif
+
         inc     POSX
 L2A4E:
-.if .def(CONFIG_PRINT_CR) || .def(CBM1)
-        pla
-.endif
-.ifdef CONFIG_MONCOUT_DESTROYS_Y
-        sty     DIMFLG
-.endif
-.ifdef CONFIG_IO_MSB
-        ora     #$80
-.endif
+
+;.if .def(CONFIG_PRINT_CR) || .def(CBM1)
+;        pla
+;.endif
+;.ifdef CONFIG_MONCOUT_DESTROYS_Y
+;        sty     DIMFLG
+;.endif
+;.ifdef CONFIG_IO_MSB
+;        ora     #$80
+;.endif
+
         jsr     MONCOUT
-.ifdef CONFIG_IO_MSB
-        and     #$7F
-.endif
-.ifdef CONFIG_MONCOUT_DESTROYS_Y
-        ldy     DIMFLG
-.endif
+        
+;.ifdef CONFIG_IO_MSB
+;        and     #$7F
+;.endif
+;.ifdef CONFIG_MONCOUT_DESTROYS_Y
+;        ldy     DIMFLG
+;.endif
+
 L2A56:
         and     #$FF
 LE8F2:

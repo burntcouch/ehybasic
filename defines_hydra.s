@@ -12,29 +12,34 @@ ZP_START1 = $3C
 ZP_START2 = $44            
 ZP_START3 = $7A
 ZP_START4 = $86
-;ZP_START3 = $52
-;ZP_START4 = $62
 
 ; extra/override ZP variables
-USRD := $0400
-USR := $0410
+USRD := $0580
+USR := $0590
 
 DEBUG := 1
+DUMPFLG := 1
 
-CLIPBOARD := $0500
+CLIPBOARD := $0602
+CLIPPTR := $0600
 
-RAMSTART2 := $0600
+RAMSTART2 := $0800
 
 ; constants
 SPACE_FOR_GOSUB := $3E
 STACK_TOP := $FA
-WIDTH := 44
+WIDTH := 40
 WIDTH2 := 30
 MONCOUT := $F803       ; will point to WRITE_CHAR in hydra bios
 MONRDKEY := $F800      ; READ_CHAR
-WRITE_BYTE := $F8A3    ;  self exp
+WRITE_BYTE := $F806    ;  self exp  -- fixed for OS 1.8Ce 
+;WRITE_BYTE := $F8A3      ; in case needed
 WOZMON := $FE00        ; Hydra OSROM WozMon entry
-CLEAR_SCR := $F928     ; ANSI escape clear screen
+HYFORTH := $EC00        ; Hydra HyForth
+
+BACKSPC := $08         ; PuTTy will send $7F (DEL) also...
+CRLF_1 := $0D
+CRLF_2 := $0A
 
 ; Hydra Entry points
 ; misc

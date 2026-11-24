@@ -84,7 +84,7 @@ NEWSTT:
         jsr     ISCNTC
         lda     TXTPTR
         ldy     TXTPTR+1
-.if .def(CONFIG_NO_INPUTBUFFER_ZP) && .def(CONFIG_2)
+.if .def(CONFIG_NO_INPUTBUFFER_ZP)
         cpy     #>INPUTBUFFER
         beq     LC6D4
 .else
@@ -98,24 +98,11 @@ LC6D4:
         ldy     #$00
 L2683:
         lda     (TXTPTR),y
-.ifndef CONFIG_11
-        beq     LA5DC	; old: 1 cycle more on generic case
-        cmp     #$3A
-        beq     NEWSTT2
-SYNERR1:
-        jmp     SYNERR
-LA5DC:
-.else
         bne     COLON; new: 1 cycle more on ":" case
-.endif
         ldy     #$02
         lda     (TXTPTR),y
         clc
-.ifdef CONFIG_2
         jeq     L2701
-.else
-        beq     L2701
-.endif
         iny
         lda     (TXTPTR),y
         sta     CURLIN
@@ -139,27 +126,12 @@ NEWSTT2:
 ; CARRY IS SET
 ; ----------------------------------------------------------------------------
 EXECUTE_STATEMENT:
-.ifndef CONFIG_11A
-        beq     RET1
-.else
         beq     RET2
-.endif
-.ifndef CONFIG_11
-        sec
-.endif
 EXECUTE_STATEMENT1:
         sbc     #$80
-.ifndef CONFIG_11
-        jcc     LET	; old: 1 cycle more on instr.
-.else
         bcc     LET1; new: 1 cycle more on assignment
-.endif
         cmp     #NUM_TOKENS
-.ifdef CONFIG_2
         bcs     LC721
-.else
-        bcs     SYNERR1
-.endif
         asl     a
         tay
         lda     TOKEN_ADDRESS_TABLE+1,y
@@ -167,19 +139,13 @@ EXECUTE_STATEMENT1:
         lda     TOKEN_ADDRESS_TABLE,y
         pha
         jmp     CHRGET
-
-.ifdef CONFIG_11
 LET1:
         jmp     LET
-
 COLON:
         cmp     #$3A
         beq     NEWSTT2
 SYNERR1:
         jmp     SYNERR
-.endif
-
-.ifdef CONFIG_2; GO TO
 LC721:
         cmp     #TOKEN_GO-$80
         bne     SYNERR1
@@ -187,7 +153,6 @@ LC721:
         lda     #TOKEN_TO
         jsr     SYNCHR
         jmp     GOTO
-.endif
 
 ; ----------------------------------------------------------------------------
 ; "RESTORE" STATEMENT
@@ -204,9 +169,56 @@ SETDA:
         sty     DATPTR+1
 RET2:
         rts
+;
+;;; originally in iscntc.s -> eater_iscntc.s -> hydra_iscntc.s
+;
+.ifdef HYDRA                               ; from Ben Eater's port, added ctrl-S for pause
+OUTA_CRLF:
+        pha
+        jsr WRITE_BYTE             ; print the char in hex for debugging
+        lda #$0D
+        jsr MONCOUT
+        lda #$0A
+        jsr MONCOUT
+        pla
+        rts
+ISCNTC:
+        jsr MONRDKEY
+        bcc not_cntc
+        cmp #3
+        bne not_cntc
+        jmp is_cntc
 
-.include "iscntc.s"
-;!!! runs into "STOP"
+not_cntc:
+        cmp #19                      ; ctrl-S
+        bne iscsret       
+loopgetc:        
+        jsr MONRDKEY                 ; just wait for a key, don't care what it is
+        bcc loopgetc
+        jsr OUTA_CRLF
+.ifdef DEBUG
+        cmp #'d'                    ; go to DEBUG
+        bne loopcnt1
+        jsr GODEBUG
+.endif
+loopcnt1:
+        cmp #'x'
+        bne loopcnt2                ; go into WOZMON to debug something
+        pha
+        jsr WOZGO
+        pla
+ loopcnt2:       
+        cmp #3                     ; unless it's ctrl-c
+        beq is_cntc
+        cmp #$20
+        bne loopgetc               ; unless a space, keep looping
+iscsret:
+        rts
+is_cntc:
+        ; Fall through
+.endif
+;;;
+;!!! runs into "STOP" as you might notice...
 ; ----------------------------------------------------------------------------
 ; "STOP" STATEMENT
 ; ----------------------------------------------------------------------------
@@ -222,7 +234,7 @@ END2:
         bne     RET1
         lda     TXTPTR
         ldy     TXTPTR+1
-.if .def(CONFIG_NO_INPUTBUFFER_ZP) && .def(CONFIG_2)
+.if .def(CONFIG_NO_INPUTBUFFER_ZP) && .def(CONFIG_2)                 ;NOZPBUFFER
 ; BUG on AppleSoft I
 ; fix exists on AppleSoft II
 ; TXTPTR+1 will always be > 0
