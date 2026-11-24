@@ -4,7 +4,12 @@ Thanks to Ben Eater's project [here](https://github.com/beneater/msbasic) and hi
 
 And of course this would be impossible without [mist64's](https://github.com/mist64/msbasic) and collaborators' work on the most ancient and hoary versions of MS-BASIC known to man...
 
----------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------<br/>
+### UPDATES
+11/24/26:  this is version 0.751.<br/>
+The major change is to move the buffers and other structures up with a start point at $400 rather than $300.  This is to accomadate a permanent buffer for Wozmon.
+Minor change; I am moving toward making EhyBasic more compatible with HyForth and the hyforth_os.  EhyBasic will now be accessible in the HyForth using the 'basic' keyword'.  Currently this REPLACES rather than shares the RAM space, but it is fairly easy to switch back and forth as long as you don't expect your data spaces to be preserved; both HF and EhyBas start 'cold'.  This will change as I figure out how to do it.<br/>
+------------------------------------------------------------------------------------------<br/>
 # HOWTO:  Installing BASIC on the Hydra-16
 
 As noted below, you will need to have the [CC65 compiler/assembler](https://cc65.github.io/) suite installed on your machine, either Linux or Windows.
