@@ -50,6 +50,9 @@ STACK           := $0100
 STACK2          := STACK
 .endif
 
+; setup non ZP buffer
+;
+;INPUTBUFFER = $0300
 .ifdef INPUTBUFFER
   .if INPUTBUFFER >= $0100
 CONFIG_NO_INPUTBUFFER_ZP := 1
@@ -60,13 +63,8 @@ CONFIG_INPUTBUFFER_0200 := 1
 .endif
 INPUTBUFFERX = INPUTBUFFER & $FF00
 
-CR=13
-LF=10
 
-.ifndef CRLF_1
-CRLF_1 := CR
-CRLF_2 := LF
-.endif
+
 
 
 

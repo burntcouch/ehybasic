@@ -1,21 +1,21 @@
 .feature force_range
 .debuginfo +
 
-.setcpu "6502"
+.setcpu "65C02"
 .macpack longbranch
 
 .include "defines.s"
 .include "macros.s"     ; reviewed
 .include "zeropage.s"
 
-.include "header.s"
+.include "header.s"     ; edited by PGS
 .include "token.s"      ; edited by PGS
 .include "error.s"      ; edited by PGS
 .include "message.s"      ; edited by PGS
-.include "memory.s"
+.include "memory.s"       ; reviewed
 .include "program.s"      ; edited by PGS
 .include "flow1.s"      ; edited by PGS
-.include "loadsave.s"
+.include "loadsave.s"    ; not working on for now (see bios.s below)
 .include "flow2.s"      ; edited by PGS
 .include "misc1.s"      ; edited by PGS
 .include "print.s"      ; edited by PGS
@@ -25,11 +25,11 @@
 .include "array.s"      ; reviewed
 .include "misc2.s"      ; edited by PGS
 .include "string.s"      ; edited by PGS
-;.include "misc3.s"     ; removed - KBD specific patches
 .include "poke.s"       ; edited by PGS
 .include "float.s"      ; edited by PGS
 .include "chrget.s"      ; edited by PGS
-.include "rnd.s"
-.include "trig.s"
+.include "rnd.s"        ; edited by PGS
+.include "trig.s"        ; edited by PGS
 .include "init.s"      ; edited by PGS
-.include "extra.s"      ; edited by PGS
+.include "bios.s"       ; added functions - PGS
+.include "debug.s"      ; debug and WozMon - PGS

@@ -22,31 +22,13 @@ GERR:
         beq     JERROR
 NEXT3:
         txs
-.ifndef CONFIG_2
-        inx
-        inx
-        inx
-        inx
-.endif
         txa
-.ifdef CONFIG_2
         clc
         adc     #$04
         pha
         adc     #BYTES_FP+1
         sta     DEST
         pla
-.else
-        inx
-        inx
-        inx
-        inx
-        inx
-.ifndef CONFIG_SMALL
-        inx
-.endif
-        stx     DEST
-.endif
         ldy     #>STACK
         jsr     LOAD_FAC_FROM_YA
         tsx
@@ -338,17 +320,6 @@ L2D36:
 L2D39:
         jsr     ISLETC
         bcs     FRM_VARIABLE
-.ifdef CONFIG_CBM_ALL
-        cmp     #$FF
-        bne     LCDC1
-        lda     #<CON_PI                            ; is this a hardcoded Pi constant?
-        ldy     #>CON_PI
-        jsr     LOAD_FAC_FROM_YA
-        jmp     CHRGET
-CON_PI:
-        .byte   $82,$49,$0f,$DA,$A1
-LCDC1:
-.endif
         cmp     #$2E
         beq     L2D36
         cmp     #TOKEN_MINUS
@@ -447,14 +418,8 @@ FRM_VARIABLE_CALL	= *-1
         sty     FAC_LAST
         ldx     VALTYP
         beq     L2DB1
-.ifdef CONFIG_2
-  .ifndef CBM2
-; bugfix?
-; fixed on AppleSoft II, not on any CBM
         ldx     #$00
         stx     STRNG1+1
-  .endif
-.endif
         rts
 L2DB1:
 .ifndef CONFIG_SMALL
